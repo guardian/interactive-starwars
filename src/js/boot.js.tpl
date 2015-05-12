@@ -11,10 +11,20 @@ define([], function() {
 
     return {
         boot: function(el, context, config, mediator) {
-            // Load CSS
-            addCSS('<%= assetPath %>/main.css');
 
-            // Load main application
+            // Loading message while we fetch JS / CSS
+            el.innerHTML = '<div style="font-size: 24px; text-align: center; padding: 72px 0; font-family: \'Guardian Egyptian Web\',Georgia,serif;">Loading…</div>';
+
+            config = {
+                'assetPath': '<%= assetPath %>'
+            };
+
+            // Load CSS asynchronously
+            window.setTimeout(function() {
+                addCSS('<%= assetPath %>/main.css');
+            }, 10);
+
+            // Load JS and init
             require(['<%= assetPath %>/main.js'], function(main) {
                 main.init(el, context, config, mediator);
             }, function(err) { console.error('Error loading boot.', err); });

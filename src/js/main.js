@@ -1,16 +1,24 @@
-import iframeMessenger from 'guardian/iframe-messenger';
-import reqwest from 'reqwest';
-import head from './text/head.html!text';
+import iframeMessenger from 'guardian/iframe-messenger'
+import reqwest from 'reqwest'
+import mainHTML from './text/main.html!text'
+import share from './lib/share'
 
-function init(el, context, config, mediator) {
+var shareFn = share('Interactive title', 'http://gu.com/p/URL', '#Interactive');
+
+export function init(el, context, config, mediator) {
     iframeMessenger.enableAutoResize();
 
-	reqwest({
-	    url: 'http://ip.jsontest.com/',
-	    type: 'json',
-	    crossOrigin: true,
-	    success: (resp) => el.innerHTML = head + `<div class="ipaddress">Your IP address is: ${resp.ip}</div>`
-	});
-}
+    el.innerHTML = mainHTML.replace(/%assetPath%/g, config.assetPath);
 
-define(function() { return {init: init}; });
+    reqwest({
+        url: 'http://ip.jsontest.com/',
+        type: 'json',
+        crossOrigin: true,
+        success: (resp) => el.querySelector('.test-msg').innerHTML = `Your IP address is ${resp.ip}`
+    });
+
+    [].slice.apply(el.querySelectorAll('.interactive-share')).forEach(shareEl => {
+        var network = shareEl.getAttribute('data-network');
+        shareEl.addEventListener('click',() => shareFn(network));
+    });
+}
