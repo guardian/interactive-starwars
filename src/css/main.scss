@@ -1,4 +1,43 @@
-@import "fonts";
 @import "mq";
-@import "general";
-@import "share";
+@import "font";
+@import "layout";
+@import "component";
+@import "atomic";
+@import "animation";
+
+body,
+figure.interactive {
+    margin: 0;
+    padding: 0;
+    background-color: black;
+}
+
+// Link styles don't exist on the app
+a {
+    &,
+    &:hover,
+    &:active {
+        color: #005689;
+    }
+
+    text-decoration: none;
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+.interactive-container {
+    color: white;
+    margin: 0 auto;
+    box-sizing: border-box;
+
+    padding: 10px;
+    @include mq(mobileLandscape) {
+        padding: 20px;
+    }
+
+    @each $bp in (tablet, desktop, leftCol, wide) {
+        @include mq($bp) {
+            max-width: map-get($mq-breakpoints, $bp);
+    }}
+}

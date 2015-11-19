@@ -1,4 +1,36 @@
-.interactive-share {
+/* This file contains components of
+   1. svgs
+   2. buttons 
+*/
+
+// svgs
+svg { 
+    fill: white; 
+    width: 30px;
+    height: 30px;
+}
+.svg-prev { 
+    transform: rotate(-90deg); 
+    vertical-align: bottom;
+}
+.svg-next { 
+    transform: rotate(90deg); 
+    vertical-align: middle;
+}
+
+// buttoss
+.btn-theatre {
+    color: white;
+    @include fs-textSans(4);
+    background-color: transparent;
+    border: 1px solid white;
+    border-radius: 15px;
+    outline: 0;
+    margin: 18px 0 24px;
+    padding: 3px 18px 2px 18px;
+}
+
+.btn-share {
     height: 32px;
     width: 32px;
     border-radius: 34px;

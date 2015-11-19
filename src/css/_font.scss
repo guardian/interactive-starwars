@@ -1,0 +1,33 @@
+@import '../../bower_components/guss-typography/_typography.scss';
+
+// Header
+.f-headline {
+    @include fs-header(5);
+}
+.f-standfirst {
+    color: #bdbdbd;
+    @include fs-bodyCopy(2);
+}
+.f-nav {
+    @include fs-textSans(4);    
+}
+
+.f-prev,
+.f-next {
+    color: #bdbdbd;
+    @include fs-textSans(2);
+    text-align: center;
+}
+
+// Sections
+section {
+    > h2 { @include fs-header(3); }
+    > p  { @include fs-bodyCopy(1); }
+}
+
+.f-item {
+    @include fs-textSans(1);    
+    text-shadow: 1px 1px 2px black;
+    text-align: center;
+    line-height: 12px;
+}

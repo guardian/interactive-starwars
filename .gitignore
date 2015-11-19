@@ -5,3 +5,8 @@ bower_components
 build
 deploy
 cfg/aws-keys.json
+.gitignore
+.jshintrc
+*.DS_Store
+*.swp
+*~
