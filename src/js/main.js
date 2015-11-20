@@ -7,7 +7,7 @@ import {getDataById} from './lib/util';
 import mainHTML from './view/main.html!text';
 import charHTML from './view/characters.html!text';
 import stateOnScroll from './controller/states';
-import navigation from './controller/navigation';
+import navigationOnScroll from './controller/navigation';
 import addCharacters from './controller/characters';
 import addLocations from './controller/locations';
 
@@ -31,7 +31,7 @@ export function init(el, context, config, mediator) {
         el.querySelector('.js-cha').innerHTML = charHTML;
         addCharacters(el, dataCha);
         addLocations(el, dataLoc);
-        navigation(el);
+        navigationOnScroll(el);
     });
 
 

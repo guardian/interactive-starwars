@@ -9,7 +9,7 @@ export default function(el) {
         scrollAnimate(
             window.scrollY,
             el.querySelector(".js-" + state).offsetTop,
-            500
+            250
         );
     });
 }

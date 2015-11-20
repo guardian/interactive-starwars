@@ -1,5 +1,10 @@
 @import '../../bower_components/guss-typography/_typography.scss';
 
+// General
+.fw-bold { font-weight: bold; }
+.fs-textSans1 { @include fs-textSans(1); }
+.fs-textSans4 { @include fs-textSans(4); }
+
 // Header
 .f-headline {
     @include fs-header(5);
@@ -21,8 +26,8 @@
 
 // Sections
 section {
-    > h2 { @include fs-header(3); }
-    > p  { @include fs-bodyCopy(1); }
+    h2, h3 { @include fs-header(3); }
+    p { @include fs-bodyCopy(1); }
 }
 
 .f-item {

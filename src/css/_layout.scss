@@ -1,7 +1,7 @@
 // variables 
-$radius-big: 128px; // select by user
-$radius-mid: 64px;  // normal
-
+$radius-mid:  64px;  // normal
+$radius-big:  128px; // select by user
+$radius-ring: 300px;
 
 // Header styles 
 // override
@@ -82,4 +82,15 @@ section {
     height: 100%;
     border-radius: $radius-mid/2;
     box-shadow: 0 0 0 2px black, 0 0 0 4px white, 0 0 0 6px black, 0 0 0 7px rgba(255,255,255,0.5);
+}
+
+.l-cha-img {
+    width: $radius-big;
+    height: $radius-big;
+    border-radius: $radius-big/2;
+    margin: -($radius-ring+$radius-big)/2 auto 12px auto;
+}
+.l-cha-relation {
+    margin-top: 18px;
+    border-top: 1px solid;
 }
