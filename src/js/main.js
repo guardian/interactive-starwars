@@ -1,36 +1,44 @@
 import iframeMessenger from 'guardian/iframe-messenger';
-import d3 from './lib/d3.min';
+import d3 from './lib/d3.lite.min';
 import share from './lib/share';
 import classList from './lib/classList';
 import throttle from './lib/throttle';
-import {getDataById} from './lib/util';
+import {getDataById, testMobile, isMobile} from './lib/util';
 import mainHTML from './view/main.html!text';
-import charHTML from './view/characters.html!text';
+import addCharacters from './controller/characters';
+import addSection from './controller/section';
 import stateOnScroll from './controller/states';
 import navigationOnScroll from './controller/navigation';
-import addCharacters from './controller/characters';
-import addLocations from './controller/locations';
 
 var shareFn = share('Interactive title', 'http://gu.com/p/URL', '#Interactive');
 
 export function init(el, context, config, mediator) {
-    iframeMessenger.enableAutoResize();
-
+    iframeMessenger.enableAutoResize(); 
+    testMobile();
+    
     el.innerHTML = mainHTML.replace(/%assetPath%/g, config.assetPath);
+    if (!isMobile()) { el.querySelector(".l-stars").classList.add("a-stars");}
 
     // load json data 
     var key = "1KfSbVnGHzwAkfzZ2pebC6yhVjV88xsWnXubCAu9bIt4",
         url = "http://interactive.guim.co.uk/docsdata-test/" + key + ".json";
     
     d3.json(url, (err, json) => {
-        if (err) return console.warn(err);
-        var data = json.sheets.data,
-            dataCha = getDataById(data, "cha"),
-            dataLoc = getDataById(data, "loc");
         
-        el.querySelector('.js-cha').innerHTML = charHTML;
-        addCharacters(el, dataCha);
-        addLocations(el, dataLoc);
+        if (err) return console.warn(err);
+        var data = json.sheets.data_dev,
+            dataRef = json.sheets.relations_dev,
+            dataCha = getDataById(data, "cha"),
+            dataLoc = getDataById(data, "loc"),
+            dataOrg = getDataById(data, "org"),
+            dataTec = getDataById(data, "tec"),
+            dataOth = getDataById(data, "oth");
+        
+        addCharacters(el, dataCha, dataRef, config.assetPath);
+        addSection(el, dataLoc, "loc");
+        addSection(el, dataOrg, "org");
+        addSection(el, dataTec, "tec");
+        addSection(el, dataOth, "oth");
         navigationOnScroll(el);
     });
 

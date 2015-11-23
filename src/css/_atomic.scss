@@ -1,13 +1,18 @@
 /* atomic css */
 .ta-c { text-align: center; }
 
-.d-n { display: none; }
+.w-600 { max-width: 600px; margin: auto; }
+
+.d-n  { display: none; }
+.d-ib { display: inline-block; }
 
 .o-3_4 { opacity: 0.75; }
 
-.mt-48 { margin-top: 48px; }
-.mb-0  { margin-bottom: 0; }
-.mb-6  { margin-bottom: 6px; }
-.pt-30 { padding-top: 30px; }
+.mt-48  { margin-top: 48px; }
+.mt--60 { margin-top: -60px; }
+.mb-0   { margin-bottom: 0; }
+.mb-6   { margin-bottom: 6px; }
+.pt-30  { padding-top: 30px; }
 
+.ls-n { list-style: none; }
 .pe-n { pointer-events: none; }

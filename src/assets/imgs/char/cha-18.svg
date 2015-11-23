@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 18.1.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 128 128" enable-background="new 0 0 128 128" xml:space="preserve">
+<linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="128" y1="128" x2="-8.827482e-06" y2="-2.565731e-07">
+	<stop  offset="0" style="stop-color:#002C59"/>
+	<stop  offset="1" style="stop-color:#5EBFBA"/>
+</linearGradient>
+<rect fill="url(#SVGID_1_)" width="128" height="128"/>
+<rect x="0" y="92.5" fill="#002C59" width="128" height="35.5"/>
+<circle fill="#002C59" cx="54.1" cy="41.5" r="25.2"/>
+<circle fill="#002C59" cx="64.4" cy="45.9" r="29.7"/>
+<polygon fill="#002C59" points="64,71.1 36.6,98.5 91.4,98.5 "/>
+<path fill="#002C59" d="M78.9,84.4c8.3,0,15.1-6.8,15.1-15.1H78.9V84.4z"/>
+<rect x="72.6" y="43.3" fill="#002C59" width="21.3" height="29.9"/>
+<linearGradient id="SVGID_2_" gradientUnits="userSpaceOnUse" x1="63.9999" y1="72.1391" x2="63.9999" y2="110.1593">
+	<stop  offset="0" style="stop-color:#002C59"/>
+	<stop  offset="1" style="stop-color:#5EBFBA"/>
+</linearGradient>
+<rect x="49.1" y="72.1" fill="url(#SVGID_2_)" width="29.9" height="38"/>
+<path fill="#5EBFBA" d="M79,47.7c-3.5,0-6.3,2.8-6.4,6.3L60.1,41.5H36.3v31.8v0l12.8,12.8h17.1l19.2-19.2V54.1
+	C85.4,50.6,82.5,47.7,79,47.7z"/>
+<rect x="83.8" y="41.5" fill="#002C59" width="10.2" height="4.5"/>
+<path fill="#002C59" d="M78.9,86.1c-6.6,6.6-10,15.3-10,24.1l12,2L78.9,86.1z"/>
+<path fill="#002C59" d="M49.1,86.1c6.6,6.6,10,15.3,10,24.1l-12,2L49.1,86.1z"/>
+<rect x="72.6" y="40.2" fill="#002C59" width="12.8" height="32"/>
+<path fill="#002C59" d="M61.5,8.9c-18,0-32.6,14.6-32.6,32.6H94C94,23.5,79.5,8.9,61.5,8.9z"/>
+<rect x="54.9" y="23.8" fill="#5EBFBA" width="17.6" height="43.1"/>
+<path fill="#002C59" d="M54.9,41.5c9.7,0,17.6-7.9,17.6-17.6H54.9V41.5z"/>
+<path fill="#002C59" d="M78.9,68.3c11.1,0,20-9,20-20h-20V68.3z"/>
+</svg>

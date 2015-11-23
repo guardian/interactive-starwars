@@ -13,7 +13,7 @@
     height: $radius-ring;
     border: 1px solid rgba(255, 255, 255, 0.25);
     border-radius: $radius-ring/2;    
-    margin: -($radius-big/2) auto 0 auto;
+    margin: /*-($radius-big/2)*/ -88px auto 0 auto;
     animation: scale 1.5s ease infinite; 
 }
 @keyframes scale {
@@ -21,6 +21,9 @@
     75%  { transform: scale(1.1); opacity: 1; }
     100% { transform: scale(1);   opacity: 0; }
 }
+
+.l-cha { transition: all 1s ease-in-out; }
+.a-cha { transform: scale(0.5); }
 
 .a-zoom-out {
     animation: zoom-out 1s ease-out 1;
@@ -38,12 +41,23 @@
     100% { transform: scale(2) translate(0, 600px); }
 }
 
+.a-h-0 {
+    height: 0;
+    overflow: hidden;
+    transition: height 1.5s ease;
+}
+.a-h-full {
+    height: 600px;
+}
+
 
 // Page background
-.a-stars {
-    background-image: url(/assets/imgs/twinkling.png), url(/assets/imgs/stars.png);
+.l-stars {
+    background-image: url('assets/imgs/twinkling.png'), url('assets/imgs/stars.png');
     background-position: 0 0, 0 0;
-    animation: blinks 250s linear infinite;
+}
+.a-stars {
+    animation: blinks 300s linear infinite;
 }
 @keyframes blinks {
   from { background-position: 0 0, 0 0; }

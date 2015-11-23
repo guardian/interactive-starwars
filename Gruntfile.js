@@ -205,15 +205,15 @@ module.exports = function(grunt) {
             jspmFlags: '-m',
             assetPath: '<%= visuals.s3.domain %><%= visuals.s3.path %>/<%= visuals.timestamp %>'
         });
-    })
+    });
 
     grunt.registerTask('boot_url', function() {
-        grunt.log.write('\nBOOT URL: '['green'].bold)
-        grunt.log.writeln(grunt.template.process('<%= visuals.s3.domain %><%= visuals.s3.path %>/boot.js'))
-    })
+        grunt.log.write('\nBOOT URL: '['green'].bold);
+        grunt.log.writeln(grunt.template.process('<%= visuals.s3.domain %><%= visuals.s3.path %>/boot.js'));
+    });
 
-    grunt.registerTask('harness', ['copy:harness', 'sass:harness', 'symlink:fonts'])
-    grunt.registerTask('interactive', ['shell:interactive', 'template:bootjs', 'sass:interactive', 'copy:assets'])
+    grunt.registerTask('harness', ['copy:harness', 'sass:harness', 'symlink:fonts']);
+    grunt.registerTask('interactive', ['shell:interactive', 'template:bootjs', 'sass:interactive', 'copy:assets']);
     grunt.registerTask('default', ['clean', 'harness', 'interactive', 'connect', 'watch']);
     grunt.registerTask('build', ['clean', 'interactive']);
     grunt.registerTask('deploy', ['loadDeployConfig', 'prompt:visuals', 'build', 'copy:deploy', 'aws_s3', 'boot_url']);

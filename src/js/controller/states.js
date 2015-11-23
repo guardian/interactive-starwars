@@ -48,6 +48,8 @@ function updateState() {
     switch (curState) {
         case "cha": 
             showNav(next, nextTxt, curState, "next");
+            //select.classList.remove("a-h-full");
+            d3.selectAll(".js-cha-list div").classed("a-cha", false);
             select.classList.add("d-n");
             break;
         case "chaSelect":
@@ -57,6 +59,7 @@ function updateState() {
             break; 
         case "loc": 
             showNav(prev, prevTxt, curState, "prev");
+            //select.classList.remove("a-h-full");
             select.classList.add("d-n");
             break;            
     }

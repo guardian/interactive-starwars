@@ -6,49 +6,54 @@ export function getRandom(max, min) {
     return Math.round(Math.random() * (max - min) + min);
 }
 
-export function getHexagon(width, height, imgSize) {
-    var h = (Math.sqrt(3)/2),
-        r = ((width < height) ? width/2 : height/2) - imgSize/2,
-        shift = 4/5,
-        x = r*h,
-        y = r - imgSize/2,
-        hexagonPos = [
-        {x: x,       y: y - r*shift},
-        {x: x + r*h, y: y - r/2},
-        {x: x + r*h, y: y + r/2},
-        {x: x,       y: y + r*shift},
-        {x: x - r*h, y: y + r/2},
-        {x: x - r*h, y: y - r/2}
-    ];
-    return {
-        center: {x:x, y:y},
-        height: r*shift*2,
-        vertices: hexagonPos
-    };
+export function getPolygon(n) {
+    var pts = [],
+        x = 100, y = 100, 
+        r = 100, s = r*2;
+    for (var i=0; i<n; i++) {
+        var ptX = Math.round((x + r * Math.sin(0.5 + 2*Math.PI*i/n)) * 100 / s),
+            ptY = Math.round((y + r * Math.cos(0.5 + 2*Math.PI*i/n)) * 100 / s);
+        pts.push({x: ptX, y: ptY});
+    }
+    console.log(pts);
+    return pts;
 }
 
 // NOTE: temp clac
 export function getLayout() {
     return [
-        {x:50, y:50},
+        {x:50, y:50}, //0
         
-        {x:35, y:33},
-        {x:35, y:67},
-        {x:65, y:33},
-        {x:65, y:67},
-        {x:25, y:50},
-        {x:75, y:50},
+        {x:38, y:33}, //1
+        {x:38, y:67},
+        {x:62, y:33},
+        {x:62, y:67},
+        {x:27, y:50},
+        {x:73, y:50},
 
-        {x:50, y:15},
-        {x:50, y:85},
-        {x:15, y:20},
-        {x:15, y:80},
-        {x:80, y:20},
-        {x:80, y:80},
+        {x:50, y:17}, //7
+        {x:50, y:83},
+        {x:15, y:36},
+        {x:15, y:64},
+        {x:85, y:36},
+        {x:85, y:64},       
         
-        {x:10, y:37},
-        {x:10, y:63},
-        {x:90, y:37},
-        {x:90, y:63}
+        {x:78, y:20}, //13
+        {x:78, y:80},
+        {x:22, y:20},
+        {x:22, y:80},
+    
+        {x:34, y:7}, //17
+        {x:34, y:93},
+        {x:66, y:7},
+        {x:66, y:93}
     ];
+}
+
+var flagMobile;
+export function testMobile() {
+    flagMobile = (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent));
+}
+export function isMobile() {
+    return flagMobile;
 }
