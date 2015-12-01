@@ -1,11 +1,21 @@
 import secHTML from '../view/section.html!text';
-import {isMobile, getLayout} from '../lib/util';
-import {addItemSelected} from '../controller/sectionItemSelected';
+import {getLayout} from '../lib/utils';
+import addSectionList from '../controller/sectionList';
 
-const radiusLoc = 64;
+const maxItems = 21;
+const maxRadius = 64;
+const marginTop = {
+    cha:   0, tec: -36,
+    loc: -60, org: -60, oth: -60
+};
+const txtSections = {
+    0: "",
+    1: "Here are the <type> known to be appearing in the film"
+};
 
-export default function(el, data, sec) {
-    
+export default function(el, data, sec, assetPath) {
+     
+    // load general section data
     var secEl, typeEls;
     
     secEl = el.querySelector('.js-' + sec);
@@ -14,48 +24,39 @@ export default function(el, data, sec) {
     
     typeEls = Array.prototype.slice.call(secEl.querySelectorAll(".js-type"));
     typeEls.forEach( d => d.textContent = data[0].type);
-   
+
+
+    // remap items in section data
     var p = getLayout(),
-        r = radiusLoc;
+        r = maxRadius;
     
+    data.sort((a, b) => {
+        // random important >= all existance
+        if (!a.importance) a.importance = 3; 
+        if (!b.importance) b.importance = 3;
+
+        if (a.importance > b.importance) { return 1; }
+        if (a.importance < b.importance) { return -1;}
+        // a must be equal to b
+        return 0;
+    });
+    if (data.length > maxItems) { data = data.slice(0, maxItems); }
+
     data = data.map((d, i) => {
-        d.size = r;
+        //d.size = r;
+        d.size = maxRadius - (d.importance-1) * 6;
         d.top  = "calc(" + p[i].y + "% - " + r/2 + "px)";
         d.left = "calc(" + p[i].x + "% - " + r/2 + "px)";
+        
+        // TODO: load all images when they are ready
+        if (sec === "cha") {       
+            d.img = "url('" + assetPath + "/assets/imgs/char/" + d.id + ".svg')"; 
+            d.imgSelect = "url('" + assetPath + "/assets/imgs/char/" + d.id + "-full.svg')"; 
+        }
         return d;
     });
 
-    addSectionList(d3.select(".js-"+sec), data);
-}
 
-function addSectionList(el, dataList) {
-    var chars = el.select(".js-list")
-    .style("position", "relative")
-    .selectAll("div")
-    .data(dataList).enter();
-    
-    chars
-    .append("div")
-    .attr("id", d => d.id)
-    .attr("class", "l-item" + (isMobile() ? "":" a-item")) 
-    .style("position", "absolute")
-    .style("top", d => d.top)
-    .style("left", d => d.left)
-    .style("width", d => d.size + "px")
-    .style("height", d => d.size + "px")
-    .style("background-image", d => d.img)
-    .on("touchstart", d => addItemSelected(el, d))
-    .on("click", d => {if (isMobile()) return; addItemSelected(el, d);})
-    .append("div")
-    .attr("class", "l-ring a-ring");
-    
-    chars
-    .append("div")
-    .attr("class", "f-item pe-n")
-    .style("position", "absolute")
-    .style("top", d => d.top)
-    .style("left", d => d.left)
-    .style("width", d => d.size + "px")
-    .style("margin-top", d => (d.size-12) + "px")
-    .text(d => d.name);
+    // add items to the section
+    addSectionList(d3.select(".js-"+sec), data, marginTop[sec]);
 }

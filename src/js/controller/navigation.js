@@ -1,8 +1,10 @@
 import scrollAnimate from '../lib/scrollAnimate';
+import Hammer from '../lib/hammer.min';
 
 var pageEl = document.body; 
 
 export default function(sectionEl) {
+    // scroll sections
     var nav = sectionEl.querySelector(".js-nav");    
     nav.addEventListener("click", e => {
         var state = e.target.dataset.nav;
@@ -14,4 +16,14 @@ export default function(sectionEl) {
             250
         );
     });
+    
+    // swipe sections
+    /*var mainEl = document.querySelector(".js-main");
+    var mc = new Hammer(mainEl);
+    mc.on("swipe pan", e => {
+        console.log("switch section");
+    });
+    mc.on("tap", e => {
+        console.log("tap");
+    });*/
 }

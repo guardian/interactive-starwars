@@ -1,18 +1,18 @@
 import itemHTML from '../view/sectionItemSelected.html!text';
-import {isMobile} from '../lib/util';
+import {isMobile} from '../lib/utils';
 
-var pageEl, mainEl, starsEl, listEls, modalEl, data;
+var pageEl, mainEl, starsEl, listEls, modalEl, scrollEl, data;
 export default function(d) {
     pageEl = document.body;
     mainEl = document.querySelector(".js-main");
-    starsEl = d3.select(".a-stars");
+    scrollEl = document.querySelector(".js-modal"); //TODO: remove duplicates
     modalEl = d3.select(".js-modal").html(itemHTML);
     data = d;
 }
 
 export function addItemSelected(sectionEl, d) {
     // display transition effects
-    starsEl.classed("a-hyperspace", true);
+    mainEl.classList.add("a-hyperspace");
     listEls = sectionEl.selectAll(".js-list div")
               .classed("a-zoom-out",item => item.id!==d.id ? true:false)
               .classed("a-zoom-in", item => item.id===d.id ? true:false);
@@ -27,7 +27,7 @@ export function addItemSelected(sectionEl, d) {
         addItemBio(d);
         pageY = pageEl.scrollTop;       
         mainEl.classList.add("l-lock");
-        starsEl.classed("a-hyperspace", false);
+        mainEl.classList.remove("a-hyperspace");
         listEls.classed("a-zoom-in", false)
                .classed("a-zoom-out", false);
     }, 500);
@@ -44,6 +44,8 @@ export function addItemSelected(sectionEl, d) {
 }
 
 function addItemBio(d) {
+    scrollEl.scrollTop = 0;
+
     // add item bio
     modalEl.classed("d-n", false);
     modalEl.select(".js-name").text(d.name);
@@ -53,16 +55,18 @@ function addItemBio(d) {
     
     // remove/add item related list (if exists)
     modalEl.selectAll(".js-rels li").remove();
-    
-    var dataRel = getItemRelatedList(d.related_to);
+    var dataRel = getItemRelatedList(d.related_to, d.relationship);
     if (dataRel.length === 0) return;
     addItemRelatedList(dataRel);
 }
 
-function getItemRelatedList(rels) {
-    var dataRel = data.filter(d => rels.indexOf(d.name) !== -1);
-    // TODO: map relationship
-    //console.log(rels, list);
+function getItemRelatedList(names, rels) {
+    rels = rels.split(",");
+    rels = rels.map(r => r.trim());
+
+    var dataRel = data.filter(d => names.indexOf(d.name) !== -1);
+    dataRel = dataRel.map((d, i) => { d.relation = rels[i]; return d; });
+
     return dataRel;
 }
 

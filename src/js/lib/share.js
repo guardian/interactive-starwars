@@ -4,6 +4,7 @@ const googleBaseUrl = 'https://plus.google.com/share?url=';
 
 export default function share(title, shareURL, hashTag) {
     return function (network, extra='') {
+        console.log(title, shareURL, hashTag);
         var twitterMessage = `${extra}${title} ${hashTag}`;
         var shareWindow;
 
@@ -18,5 +19,5 @@ export default function share(title, shareURL, hashTag) {
         }
 
         window.open(shareWindow, network + 'share', 'width=640,height=320');
-    }
+    };
 }

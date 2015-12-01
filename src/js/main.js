@@ -3,13 +3,12 @@ import d3 from './lib/d3.lite.min';
 import share from './lib/share';
 import classList from './lib/classList';
 import throttle from './lib/throttle';
-import {getDataById, testMobile, isMobile} from './lib/util';
+import {getDataById, testMobile, isMobile} from './lib/utils';
 import mainHTML from './view/main.html!text';
-import addSectionChar from './controller/sectionChar';
 import addSection from './controller/section';
 import addSectionItemSelected from './controller/sectionItemSelected';
-import stateOnScroll from './controller/states';
 import navigationOnScroll from './controller/navigation';
+//import stateOnScroll from './controller/states';
 
 var shareFn = share('Interactive title', 'http://gu.com/p/URL', '#Interactive');
 
@@ -17,8 +16,11 @@ export function init(el, context, config, mediator) {
     iframeMessenger.enableAutoResize(); 
     testMobile();
     
+    // load main page 
     el.innerHTML = mainHTML.replace(/%assetPath%/g, config.assetPath);
-    if (!isMobile()) { el.querySelector(".l-stars").classList.add("a-stars");}
+    var mainEl = el.querySelector(".js-main");
+    if (!isMobile()) { mainEl.classList.add("l-stars", "a-stars"); }
+    else { mainEl.classList.add("l-stars-lite"); }
 
     // load json data 
     var key = "1KfSbVnGHzwAkfzZ2pebC6yhVjV88xsWnXubCAu9bIt4",
@@ -27,20 +29,12 @@ export function init(el, context, config, mediator) {
     d3.json(url, (err, json) => {
         
         if (err) return console.warn(err);
+        
         var data = json.sheets.data_dev,
-            //dataRef = json.sheets.relations_dev,
-            dataCha = getDataById(data, "cha"),
-            dataLoc = getDataById(data, "loc"),
-            dataOrg = getDataById(data, "org"),
-            dataTec = getDataById(data, "tec"),
-            dataOth = getDataById(data, "oth");
-    
-        addSectionChar(el, dataCha, config.assetPath);
-        addSection(el, dataLoc, "loc");
-        addSection(el, dataOrg, "org");
-        addSection(el, dataTec, "tec");
-        addSection(el, dataOth, "oth");
+            secs = ["cha", "loc", "org", "tec", "oth"];
+        secs.forEach(s => addSection(el, getDataById(data, s), s, config.assetPath));
         addSectionItemSelected(data);
+       
         navigationOnScroll(el);
     });
 
@@ -56,7 +50,7 @@ export function init(el, context, config, mediator) {
 
 
     // share buttons
-    [].slice.apply(el.querySelectorAll('.interactive-share')).forEach(shareEl => {
+    [].slice.apply(el.querySelectorAll('.btn-share')).forEach(shareEl => {
         var network = shareEl.getAttribute('data-network');
         shareEl.addEventListener('click',() => shareFn(network));
     });
