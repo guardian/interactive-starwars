@@ -5,7 +5,13 @@ const states = {
     cha: { next: { txt: "Next: the locations", dst: "loc" }},
     chaSelect: { next: { txt: "Next: the locations", dst: "loc" },
                  prev: { txt: "Previous: the characters", dst:"cha" }},
-    loc: { prev: { txt: "Previous: the characters", dst:"cha" }}
+    loc: { prev: { txt: "Previous: the characters", dst:"cha" },
+           next: { txt: "Next: the organisations", dst:"org"}},
+    org: { prev: { txt: "Previous: the locations", dst:"loc" },
+           next: { txt: "Next: the technologies", dst:"tec"}},
+    tec: { prev: { txt: "Previous: the organisations", dst:"org" },
+           next: { txt: "Next: the others", dst:"oth"}},
+    oth: { prev: { txt: "Previous: the technologies", dst:"tec" }}
 };
 
 var curState = "cha", preState = "cha";
@@ -21,24 +27,24 @@ var curState = "cha", preState = "cha";
 function testState(){
     var y = window.scrollY,
         yCha = document.querySelector(".js-cha").offsetTop,
-        yLoc = document.querySelector(".js-loc").offsetTop;
-    var select = document.querySelector(".js-cha-select"),
-        yCSStr = select.offsetTop - 30,
-        yCSEnd = select.offsetTop + 30;//+ select.offsetHeight;
-    //console.log(y, yCSStr, yCSEnd);
+        yLoc = document.querySelector(".js-loc").offsetTop,
+        yOrg = document.querySelector(".js-org").offsetTop,
+        yTec = document.querySelector(".js-tec").offsetTop,
+        yOth = document.querySelector(".js-oth").offsetTop;
     
     // test state        
     if      (y <= yCha) { curState = "cha"; }
+    else if (y >= yOth) { curState = "oth"; }
+    else if (y >= yTec) { curState = "tec"; }
+    else if (y >= yOrg) { curState = "org"; }
     else if (y >= yLoc) { curState = "loc"; }
-    else if (y >= yCSStr && y <= yCSEnd) { curState = "chaSelect"; }
     else { curState = "non"; console.log("test: a new state is needed!!!"); }
-    
 }
 
 function updateState() {
+    //console.log(curState);
     var prev = document.querySelector(".js-prev"),
         next = document.querySelector(".js-next"),
-        select = document.querySelector(".js-cha-select"),
         prevTxt = prev.querySelector("span"),
         nextTxt = next.querySelector("span");
    
@@ -47,21 +53,27 @@ function updateState() {
     
     switch (curState) {
         case "cha": 
-            showNav(next, nextTxt, curState, "next");
+            //showNav(next, nextTxt, curState, "next");
             //select.classList.remove("a-h-full");
-            d3.selectAll(".js-cha-list div").classed("a-cha", false);
-            select.classList.add("d-n");
             break;
-        case "chaSelect":
+        /*case "chaSelect":
             if (select.classList.contains("d-n")) return;
             showNav(prev, prevTxt, curState, "prev");
-            showNav(next, nextTxt, curState, "next");
-            break; 
+            //showNav(next, nextTxt, curState, "next");
+            break;*/ 
         case "loc": 
-            showNav(prev, prevTxt, curState, "prev");
+            //showNav(prev, prevTxt, curState, "prev");
+            //showNav(next, nextTxt, "cha", "next");
             //select.classList.remove("a-h-full");
-            select.classList.add("d-n");
             break;            
+        /*case "cha": 
+        case "loc": 
+        case "org":
+        case "tec":
+        case "oth":
+            showNav(prev, prevTxt, curState, "prev");
+            //showNav(next, nextTxt, curState, "next");
+            break;*/ 
     }
     
     preState = curState;

@@ -5,8 +5,9 @@ import classList from './lib/classList';
 import throttle from './lib/throttle';
 import {getDataById, testMobile, isMobile} from './lib/util';
 import mainHTML from './view/main.html!text';
-import addCharacters from './controller/characters';
+import addSectionChar from './controller/sectionChar';
 import addSection from './controller/section';
+import addSectionItemSelected from './controller/sectionItemSelected';
 import stateOnScroll from './controller/states';
 import navigationOnScroll from './controller/navigation';
 
@@ -27,18 +28,19 @@ export function init(el, context, config, mediator) {
         
         if (err) return console.warn(err);
         var data = json.sheets.data_dev,
-            dataRef = json.sheets.relations_dev,
+            //dataRef = json.sheets.relations_dev,
             dataCha = getDataById(data, "cha"),
             dataLoc = getDataById(data, "loc"),
             dataOrg = getDataById(data, "org"),
             dataTec = getDataById(data, "tec"),
             dataOth = getDataById(data, "oth");
-        
-        addCharacters(el, dataCha, dataRef, config.assetPath);
+    
+        addSectionChar(el, dataCha, config.assetPath);
         addSection(el, dataLoc, "loc");
         addSection(el, dataOrg, "org");
         addSection(el, dataTec, "tec");
         addSection(el, dataOth, "oth");
+        addSectionItemSelected(data);
         navigationOnScroll(el);
     });
 

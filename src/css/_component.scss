@@ -30,6 +30,12 @@ svg {
     padding: 3px 18px 2px 18px;
 }
 
+.btn-close {
+    cursor: pointer;
+    path { fill: rgba(255,255,255,0.25); }
+    &:hover path { fill: rgba(255,255,255,1); }
+}
+
 .btn-share {
     height: 32px;
     width: 32px;

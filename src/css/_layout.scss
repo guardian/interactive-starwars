@@ -8,7 +8,8 @@ $radius-ring: 300px;
 .l-header {
     display: none;
 }
-// custom
+
+// custom: main
 .l-logo {
     float: right;
     margin-top: 6px;
@@ -89,7 +90,7 @@ section {
     box-shadow: 0 0 0 2px black, 0 0 0 4px white, 0 0 0 6px black, 0 0 0 7px rgba(255,255,255,0.5);
 }
 
-.l-cha-img {
+.l-img {
     width: $radius-big;
     height: $radius-big;
     border-radius: $radius-big/2;
@@ -119,9 +120,25 @@ section {
     margin-left: 76px;
     padding-top: 10px;
 }
+.l-lock {
+    height: 0;
+    overflow: hidden;
+}
 
-.l-sec {
-    //width: 200px;
-    //height: 200px;
-    margin-top: -60px;
+// custom: modal
+.l-modal {
+    background-color: black;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    min-height: 100vh;
+    height: 100%;
+    overflow-y: scroll; 
+}
+.l-sel {
+    color: white;
+    max-width: 620px;
+    margin: auto;
+    padding: 12px;
 }

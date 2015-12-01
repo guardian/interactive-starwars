@@ -1,11 +1,11 @@
+import charHTML from '../view/sectionChar.html!text';
 import {getRandom, getLayout, isMobile} from '../lib/util';
-import charHTML from '../view/sectionCharacters.html!text';
-import charSelected from '../controller/characterSelected';
+import {addItemSelected} from '../controller/sectionItemSelected';
 
 const maxChar = 21;
 const maxRadius = 64;
 
-export default function(el, dataCha, dataRef, assetPath) {
+export default function(el, dataCha, assetPath) {
     el.querySelector('.js-cha').innerHTML = charHTML;
     
     var pts = getLayout();
@@ -37,11 +37,11 @@ export default function(el, dataCha, dataRef, assetPath) {
         return d;
     });
 
-    addList(dataCha, dataRef);
+    addList(d3.select(".js-cha"), dataCha);
 }
 
-function addList(dataList, dataRefs) {
-    var chars = d3.select(".js-cha-list")
+function addList(el, dataList) {
+    var chars = d3.select(".js-list")
     .style("position", "relative")
     .selectAll("div")
     .data(dataList).enter();
@@ -56,8 +56,8 @@ function addList(dataList, dataRefs) {
     .style("width", d => d.size + "px")
     .style("height", d => d.size + "px")
     .style("background-image", d => d.img)
-    .on("touchstart", d => charSelected(d, dataList, dataRefs))
-    .on("click", d => { if (isMobile()) return; charSelected(d, dataList, dataRefs);})
+    .on("touchstart", d => addItemSelected(el, d))
+    .on("click", d => { if (isMobile()) return; addItemSelected(el, d);})
     .append("div")
     .attr("class", "l-ring a-ring");
     
@@ -70,5 +70,4 @@ function addList(dataList, dataRefs) {
     .style("width", d => d.size + "px")
     .style("margin-top", d => (d.size-12) + "px")
     .text(d => d.name);
-    //.text((d,i) => i+". "+d.name);
 }

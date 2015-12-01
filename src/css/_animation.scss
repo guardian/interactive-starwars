@@ -1,57 +1,5 @@
-// Section charactor
-.a-item { opacity: 0.75; }
-.a-ring { opacity: 0; }
-
-.a-item:hover {
-    opacity: 1;
-    .a-ring {
-    opacity: 0.75;
-    animation: scale 1s ease infinite;
-}}
-.a-cha-ring {
-    width: $radius-ring;
-    height: $radius-ring;
-    border: 1px solid rgba(255, 255, 255, 0.25);
-    border-radius: $radius-ring/2;    
-    margin: /*-($radius-big/2)*/ -88px auto 0 auto;
-    animation: scale 1.5s ease infinite; 
-}
-@keyframes scale {
-    0%   { transform: scale(1);   opacity: 0.5; }
-    75%  { transform: scale(1.1); opacity: 1; }
-    100% { transform: scale(1);   opacity: 0; }
-}
-
-.l-cha { transition: all 1s ease-in-out; }
-.a-cha { transform: scale(0.5); }
-
-.a-zoom-out {
-    animation: zoom-out 1s ease-out 1;
-}
-.a-zoom-in {
-    animation: zoom-in 1s ease-out 1;
-}
-@keyframes zoom-out {
-    50%  { transform: scale(0.5); } 
-    100% { transform: scale(0.5); opacity: 0.25; } 
-}
-@keyframes zoom-in {
-    50%  { transform: scale(2) translate(0, 0)} 
-    75%  { transform: scale(2) translate(0, 400px); }
-    100% { transform: scale(2) translate(0, 600px); }
-}
-
-.a-h-0 {
-    height: 0;
-    overflow: hidden;
-    transition: height 1.5s ease;
-}
-.a-h-full {
-    height: 600px;
-}
-
-
-// Page background
+/* animation */
+// page background
 .l-stars {
     background-image: url('assets/imgs/twinkling.png'), url('assets/imgs/stars.png');
     background-position: 0 0, 0 0;
@@ -64,10 +12,55 @@
   to   { background-position: -10000px 5000px, 0 0; }
 }
 
-.a-fall {
-    animation: fall 1s ease-out 1;
+// section
+.a-item { opacity: 0.75; }
+.a-ring { opacity: 0; }
+
+.a-item:hover {
+    opacity: 1;
+    .a-ring {
+    opacity: 0.75;
+    animation: scale 1s ease infinite;
+}}
+
+// transit between section and section item selected
+// bg
+.a-hyperspace {
+    animation: space 1s ease-out 1;
 }
-@keyframes fall {
-    50%  { background-size: 0 0, 2000px 5000px; }
-    100% { background-size: 0 0, 2000px 200000px; }
+@keyframes space {
+    25%  { background-size: 0 0, 1280px 1600px; }
+    50%  { background-size: 0 0, 12800px 1600px; }
+    100% { background-size: 0 0, 2000000px 1600px; }
+}
+// items
+.a-zoom-out {
+    animation: zoom-out 0.75s ease-out 1;
+}
+.a-zoom-in {
+    animation: zoom-in 0.75s ease-out 1;
+}
+@keyframes zoom-out {
+    40%  { transform: scale(0.5) translate(0, 0);} 
+    100% { transform: scale(0.5) translate(-1800px, 0); opacity: 0.25; } 
+}
+@keyframes zoom-in {
+    40%  { transform: scale(2) translate(0, 0)} 
+    60%  { transform: scale(2) translate(400px,0); }
+    100% { transform: scale(2) translate(600px,0); }
+}
+
+// section item selected
+.a-img {
+    width: $radius-ring;
+    height: $radius-ring;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: $radius-ring/2;    
+    margin: /*-($radius-big/2)*/ -88px auto 0 auto;
+    animation: scale 1.5s ease infinite; 
+}
+@keyframes scale {
+    0%   { transform: scale(1);   opacity: 0.5; }
+    75%  { transform: scale(1.1); opacity: 1; }
+    100% { transform: scale(1);   opacity: 0; }
 }
