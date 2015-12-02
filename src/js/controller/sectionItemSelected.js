@@ -1,5 +1,6 @@
 import itemHTML from '../view/sectionItemSelected.html!text';
 import {isMobile} from '../lib/utils';
+import svgs from '../../assets/svgfull.json!json';
 
 var pageEl, mainEl, starsEl, listEls, modalEl, scrollEl, data;
 export default function(d) {
@@ -51,8 +52,9 @@ function addItemBio(d) {
     modalEl.select(".js-name").text(d.name);
     modalEl.select(".js-desc").text(d.bio);
     modalEl.select(".js-know").text(d.known_info);
-    modalEl.select(".js-img").style("background-image", d.imgSelect);
-    
+    modalEl.select(".js-img")
+    .html(() => {var str = svgs[d.id]; return str? svgs[d.id]:"<svg></svg>";});
+     
     // remove/add item related list (if exists)
     modalEl.selectAll(".js-rels li").remove();
     var dataRel = getItemRelatedList(d.related_to, d.relationship);
@@ -81,7 +83,7 @@ function addItemRelatedList(dataRel) {
     relEls
     .append("div")
     .attr("class", "l-rels-img")
-    .style("background-image", d => d.imgSelect);
+    .html(d => {var str = svgs[d.id]; return str? svgs[d.id]:"<svg></svg>";});
     
     relEls
     .append("div")

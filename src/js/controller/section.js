@@ -43,16 +43,10 @@ export default function(el, data, sec, assetPath) {
     if (data.length > maxItems) { data = data.slice(0, maxItems); }
 
     data = data.map((d, i) => {
-        //d.size = r;
         d.size = maxRadius - (d.importance-1) * 6;
         d.top  = "calc(" + p[i].y + "% - " + r/2 + "px)";
         d.left = "calc(" + p[i].x + "% - " + r/2 + "px)";
         
-        // TODO: load all images when they are ready
-        if (sec === "cha") {       
-            d.img = "url('" + assetPath + "/assets/imgs/char/" + d.id + ".svg')"; 
-            d.imgSelect = "url('" + assetPath + "/assets/imgs/char/" + d.id + "-full.svg')"; 
-        }
         return d;
     });
 
