@@ -1,5 +1,5 @@
 // variables 
-$radius-mid:  64px;  // normal
+$radius-mid:  76px;  // normal
 $radius-big:  128px; // select by user
 $radius-ring: 300px;
 
@@ -18,6 +18,15 @@ $radius-ring: 300px;
     background-image: url('assets/imgs/twinkling.png'), url('assets/imgs/stars.lite.png');
     background-position: 0 0, 0 0;
 }
+
+.l-transit {
+    background-size: 100% 100vh;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 100vh;
+    position: absolute;
+}
+
 .l-logo {
     float: right;
     margin-top: 6px;
@@ -129,7 +138,7 @@ section {
 }
 .l-rels-txt {
     margin-left: 76px;
-    padding-top: 10px;
+    padding-top: 12px;
 }
 .l-lock {
     height: 0;
@@ -153,13 +162,4 @@ section {
     max-width: 620px;
     margin: auto;
     padding: 12px;
-}
-
-// custom: misc
-.l-item svg,
-.l-modal svg:not(.btn-close) {
-    width: 100%;
-    height: 100%;
-    border-radius: $radius-big/2; 
-    background-color: rgba(75,75,75, 0.5);
 }

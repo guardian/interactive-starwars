@@ -1,6 +1,6 @@
 var fs = require('fs');
 
-var src = './src/assets/imgs/char/',
+var src = './src/assets/imgs/svgs/',
     dst = './src/assets/svg';
 
 var data = "", 
@@ -24,25 +24,25 @@ fs.readdir(src, function(err,files){
                 // remove line breaks (and extra spaces)
                 svg = svg.replace(/\r?\n|\r|\t/g, ''); 
                 svg = svg.replace(/\s{2,}/g, ' '); 
-                //console.log(id, svg);
+                
+                // fix id ref issue due to file combination 
+                svg = svg.replace(/SVGID/g, id.toUpperCase()); 
                 
                 if (id.indexOf("full") === -1) {
-                    svg = svg.replace(/SVGID/g, id.toUpperCase()); 
                     data = data + "'" + id + "':'"+ svg + "',";
                 } else {
                     id = id.replace("-full", "");
-                    svg = svg.replace(/SVGID/g, id.toUpperCase()); 
                     datafull = datafull + "'" + id + "':'"+ svg + "',";
                 }
             }
             if (0 === --c) { 
                 saveFile("{"+data+"}", ""); 
                 saveFile("{"+datafull+"}", "full"); 
-                //console.log(datafull);
-                //console.log(data);
             }
         });
     });
+    //saveFile("{"+data+"}", ""); 
+    //saveFile("{"+datafull+"}", "full"); 
 });
 
 function saveFile(data, tag) {

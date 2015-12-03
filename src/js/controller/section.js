@@ -3,9 +3,10 @@ import {getLayout} from '../lib/utils';
 import addSectionList from '../controller/sectionList';
 
 const maxItems = 21;
-const maxRadius = 64;
+const maxRadius = 76;
+const difRadius = 12;
 const marginTop = {
-    cha:   0, tec: -36,
+    cha:  -5, tec: -36,
     loc: -60, org: -60, oth: -60
 };
 const txtSections = {
@@ -43,9 +44,9 @@ export default function(el, data, sec, assetPath) {
     if (data.length > maxItems) { data = data.slice(0, maxItems); }
 
     data = data.map((d, i) => {
-        d.size = maxRadius - (d.importance-1) * 6;
-        d.top  = "calc(" + p[i].y + "% - " + r/2 + "px)";
-        d.left = "calc(" + p[i].x + "% - " + r/2 + "px)";
+        d.size = maxRadius - (d.importance-1) * difRadius;
+        d.top  = "calc(" + p[i].y + "% - " + d.size/2 + "px)";
+        d.left = "calc(" + p[i].x + "% - " + d.size/2 + "px)";
         
         return d;
     });

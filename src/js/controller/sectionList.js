@@ -39,6 +39,8 @@ export default function(el, dataList, mt) {
     .style("width", d => d.size + "px")
     .style("margin-top", d => (d.size-12) + "px")
     .text(d => d.name);
+    // NOTE: mark order for debug
+    //.text((d,i) => i+", "+d.name);
 }
 
 function addHammerEvents(el, d) {

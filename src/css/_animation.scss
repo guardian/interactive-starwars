@@ -24,16 +24,25 @@
 .a-hyperspace {
     animation: space 0.5s ease-out 1;
 }
-@keyframes space {
+/*@keyframes space {
     25%  { background-size: 0 0, 1280px 1600px; }
     50%  { background-size: 0 0, 12800px 16000px; }
     100% { background-size: 0 0, 128000px 160000px; }
-}/*
+}*/
 @keyframes space {
     25%  { background-size: 0 0, 1280px 1600px; }
     50%  { background-size: 0 0, 12800px 1600px; }
     100% { background-size: 0 0, 2000000px 1600px; }
-}*/
+}
+.a-transit-dark { 
+    background-image: url("assets/imgs/gifs/hyperspace_dark.gif");
+}
+.a-transit-light { 
+    background-image: url("assets/imgs/gifs/hyperspace_light.gif");
+}
+.a-transit-unknown { 
+    background-image: url("assets/imgs/gifs/hyperspace_unknown.gif");
+}
 
 // items
 .a-zoom-out {
@@ -58,7 +67,7 @@
 .a-img {
     width: $radius-ring;
     height: $radius-ring;
-    border: 1px solid rgba(255, 255, 255, 0.25);
+    border: 1px solid rgba(200, 200, 200, 0.2);
     border-radius: $radius-ring/2;    
     margin: /*-($radius-big/2)*/ -88px auto 0 auto;
     animation: scale 1.5s ease infinite; 

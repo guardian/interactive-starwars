@@ -54,4 +54,7 @@ export function init(el, context, config, mediator) {
         var network = shareEl.getAttribute('data-network');
         shareEl.addEventListener('click',() => shareFn(network));
     });
+
+    // preload transit bg images
+    // ...
 }

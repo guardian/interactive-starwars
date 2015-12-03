@@ -1,7 +1,8 @@
 @import '../../bower_components/guss-typography/_typography.scss';
 
 // General
-.fw-bold { font-weight: bold; }
+.fw-b { font-weight: bold; }
+.fs-i { font-style: italic; }
 .fs-textSans1 { @include fs-textSans(1); }
 .fs-textSans4 { @include fs-textSans(4); }
 

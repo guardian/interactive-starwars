@@ -4,11 +4,18 @@
 */
 
 // svgs
-svg { 
-    fill: white; 
-    width: 30px;
-    height: 30px;
+svg {
+    width: 100%;
+    height: 100%;
+    border-radius: $radius-big/2;
+    // TODO: temp, remove after
+    background-color: rgba(75,75,75, 0.5);
 }
+// TODO: temp, remove after
+.btn-close svg {
+    background-color: transparent;
+}
+
 .svg-prev { 
     transform: rotate(-90deg); 
     vertical-align: bottom;
@@ -18,7 +25,7 @@ svg {
     vertical-align: middle;
 }
 
-// buttoss
+// buttos (and svg related tags)
 .btn-theatre {
     color: white;
     @include fs-textSans(4);
@@ -32,14 +39,19 @@ svg {
 
 .btn-close {
     cursor: pointer;
+    height: 32px;
     path { fill: rgba(255,255,255,0.25); }
-    &:hover path { fill: rgba(255,255,255,1); }
+    &:hover path { fill: white; }
+}
+
+.btn-close svg,
+.btn-share {
+    width: 32px;
+    height: 32px;
 }
 
 .btn-share {
-    height: 32px;
-    width: 32px;
-    border-radius: 34px;
+    border-radius: 32px;
     background: #333;
     display: inline-block;
     border: none;
