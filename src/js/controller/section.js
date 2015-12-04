@@ -1,48 +1,53 @@
 import secHTML from '../view/section.html!text';
-import {getLayout} from '../lib/utils';
+import {getLayout, getWindowSize} from '../lib/utils';
 import addSectionList from '../controller/sectionList';
 
 const maxItems = 21;
-const maxRadius = 76;
-const difRadius = 12;
+
 const marginTop = {
-    cha:  -5, tec: -36,
+    cha:  24, tec: -36,
     loc: -60, org: -60, oth: -60
 };
-const txtSections = {
-    0: "",
-    1: "Here are the <type> known to be appearing in the film"
-};
 
-export default function(el, data, sec, assetPath) {
+var metaData,
+    maxRadius, difRadius;
+
+export function initSection(meta) {
+    var size = getWindowSize();
+    maxRadius = size.width<480 ? 72:100;
+    difRadius = size.width<480 ? 12:20;
+    //console.log(size.width, maxRadius);
+    
+    metaData = meta;
+    
+    String.prototype.capitalizeFirstLetter = function() {
+        return this.charAt(0).toUpperCase() + this.slice(1);
+    };
+}
+
+export function loadSection(el, data, sec, assetPath) {
      
     // load general section data
     var secEl, typeEls;
     
     secEl = el.querySelector('.js-' + sec);
     secEl.innerHTML = secHTML;
-    secEl.querySelector(".js-num").textContent = data.length;
-    
-    typeEls = Array.prototype.slice.call(secEl.querySelectorAll(".js-type"));
-    typeEls.forEach( d => d.textContent = data[0].type);
-
+    secEl.querySelector(".js-type").textContent = (metaData[sec].type).capitalizeFirstLetter();
+    secEl.querySelector(".js-title").textContent = metaData[sec].title;
+    secEl.querySelector(".js-detail").textContent = metaData[sec].description;
 
     // remap items in section data
     var p = getLayout(),
         r = maxRadius;
     
     data.sort((a, b) => {
-        // random important >= all existance
-        if (!a.importance) a.importance = 3; 
-        if (!b.importance) b.importance = 3;
-
         if (a.importance > b.importance) { return 1; }
         if (a.importance < b.importance) { return -1;}
         // a must be equal to b
         return 0;
     });
     if (data.length > maxItems) { data = data.slice(0, maxItems); }
-
+    
     data = data.map((d, i) => {
         d.size = maxRadius - (d.importance-1) * difRadius;
         d.top  = "calc(" + p[i].y + "% - " + d.size/2 + "px)";
@@ -51,7 +56,8 @@ export default function(el, data, sec, assetPath) {
         return d;
     });
 
-
     // add items to the section
     addSectionList(d3.select(".js-"+sec), data, marginTop[sec]);
 }
+
+

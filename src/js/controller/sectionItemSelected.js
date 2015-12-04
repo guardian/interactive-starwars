@@ -109,7 +109,7 @@ function addItemRelatedList(dataRel) {
     relEls
     .append("div")
     .attr("class", "l-rels-txt")
-    .html(d => '<h4 class="fs-textSans4">' + d.name + '</h4>' + 
+    .html(d => '<h5>' + d.name + '</h5>' + 
           '<p class="fs-textSans1 c-g4">' + d.relation + '</p>'
     );
 }

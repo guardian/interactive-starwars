@@ -5,10 +5,9 @@ import classList from './lib/classList';
 import throttle from './lib/throttle';
 import {getDataById, testMobile, isMobile} from './lib/utils';
 import mainHTML from './view/main.html!text';
-import addSection from './controller/section';
+import {initSection, loadSection} from './controller/section';
 import addSectionItemSelected from './controller/sectionItemSelected';
 import navigationOnScroll from './controller/navigation';
-//import stateOnScroll from './controller/states';
 
 var shareFn = share('Interactive title', 'http://gu.com/p/URL', '#Interactive');
 
@@ -30,11 +29,22 @@ export function init(el, context, config, mediator) {
         
         if (err) return console.warn(err);
         
-        var data = json.sheets.data_dev,
+        var meta = json.sheets.furniture,
+            data = json.sheets.data,
             secs = ["cha", "loc", "org", "tec", "oth"];
-        secs.forEach(s => addSection(el, getDataById(data, s), s, config.assetPath));
+        
+        // furniture
+        var header = meta.splice(0, 1)[0],
+            headerSecs = {};
+        el.querySelector(".js-headline").textContent = header.title;
+        el.querySelector(".js-standfirst").textContent = header.description;
+        
+        // sections
+        meta.forEach(m => headerSecs[m.id] = m);
+        initSection(headerSecs);
+        secs.forEach(s => loadSection(el, getDataById(data, s), s, config.assetPath));
         addSectionItemSelected(data);
-       
+         
         navigationOnScroll(el);
     });
 

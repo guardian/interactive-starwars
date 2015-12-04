@@ -1,11 +1,11 @@
 import scrollAnimate from '../lib/scrollAnimate';
-import Hammer from '../lib/hammer.min';
 
 var pageEl = document.body; 
 
 export default function(sectionEl) {
     // scroll sections
     var nav = sectionEl.querySelector(".js-nav");    
+
     nav.addEventListener("click", e => {
         var state = e.target.dataset.nav;
         if (state === undefined) return;

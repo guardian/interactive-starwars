@@ -43,10 +43,10 @@ export function getLayout() {
         {x:19, y:19},
         {x:19, y:81},
     
-        {x:32, y:7}, //17
-        {x:32, y:93},
-        {x:68, y:7},
-        {x:68, y:93}
+        {x:33, y:6}, //17
+        {x:33, y:93},
+        {x:67, y:7},
+        {x:67, y:93}
     ];
 }
 
@@ -56,4 +56,18 @@ export function testMobile() {
 }
 export function isMobile() {
     return flagMobile;
+}
+
+export function getWindowSize() {
+    var w = window,
+        d = document,
+        e = d.documentElement,
+        g = d.getElementsByTagName('body')[0],
+        x = w.innerWidth || e.clientWidth || g.clientWidth,
+        y = w.innerHeight|| e.clientHeight|| g.clientHeight;
+    
+    return {
+        width: x,
+        height: y    
+    };
 }

@@ -44,8 +44,13 @@ export default function(el, dataList, mt) {
 }
 
 function addHammerEvents(el, d) {
-    var mc = Hammer(document.querySelector("#"+d.id));
-    mc.on("tap", e => {
+    var id = document.querySelector("#"+d.id),
+        //mc = Hammer(id);
+        mc = new Hammer.Manager(id, {});
+
+    mc.add(new Hammer.Tap({event: 'longtap', time: 500})); 
+    mc.on("longtap press", e => {
+        console.log("tap or press");
         addItemSelected(el, d);
     });
 }

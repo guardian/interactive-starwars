@@ -1,5 +1,5 @@
 // variables 
-$radius-mid:  76px;  // normal
+$radius-mid:  100px;  // normal
 $radius-big:  128px; // select by user
 $radius-ring: 300px;
 
@@ -25,6 +25,7 @@ $radius-ring: 300px;
     width: 100%;
     height: 100vh;
     position: absolute;
+    pointer-events: none;
 }
 
 .l-logo {
@@ -39,11 +40,12 @@ $radius-ring: 300px;
 }
 .l-standfirst {
     max-width: 500px;
-    margin-bottom: 0;
+    margin-bottom: 24px;
 }
 .l-nav {
 	list-style-type: none;
     margin: 0;
+    margin-bottom: 36px;
     padding: 0;
     border-top: 1px solid white;
     border-bottom: 1px solid white;
@@ -81,11 +83,15 @@ $radius-ring: 300px;
 // custom: section in main
 section {
     min-height: 100vh;
-    padding-top: 18px;
+    margin-bottom: 54px;
     box-sizing: border-box;
+    border-top: 1px solid #767676;
 }
-.l-title {
-    border-top: 1px solid white;
+.l-cha {
+    border-top: none; 
+}
+
+.l-type {
     padding-top: 6px;
 }
 .l-list {
@@ -119,10 +125,10 @@ section {
 }
 
 .l-rels {
-    margin-left: 0;
-    margin-top: 18px;
-    padding-top: 18px;
-    border-top: 1px solid;
+    margin-top: 36px;
+    padding-top: 12px;
+    border-top: 1px solid #767676;
+    ul { margin-left: 0; }
     li { 
         list-style: none;
         height: 80px;
@@ -138,7 +144,7 @@ section {
 }
 .l-rels-txt {
     margin-left: 76px;
-    padding-top: 12px;
+    //padding-top: 12px;
 }
 .l-lock {
     height: 0;

@@ -6,20 +6,21 @@
 .fs-textSans1 { @include fs-textSans(1); }
 .fs-textSans4 { @include fs-textSans(4); }
 
-h2, h3 { @include fs-header(3); }
-p { @include fs-bodyCopy(1); }
+h1 { @include fs-headline(6); }
+h2 { @include fs-header(4); }
+h3 { @include fs-header(5); }
+h4 { @include fs-header(1); }
+h5 { @include fs-textSans(4); font-size: 15px; }
+p  { @include fs-bodyCopy(1); }
 
 
 // Header
-.f-headline {
+/*.f-headline {
     @include fs-header(5);
-}
+}*/
 .f-standfirst {
     color: #bdbdbd;
     @include fs-bodyCopy(2);
-}
-.f-nav {
-    @include fs-textSans(4);    
 }
 
 .f-prev,
@@ -35,5 +36,5 @@ p { @include fs-bodyCopy(1); }
     @include fs-textSans(1);    
     text-shadow: 1px 1px 2px black;
     text-align: center;
-    line-height: 12px;
+    line-height: 14px;
 }

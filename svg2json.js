@@ -1,6 +1,6 @@
 var fs = require('fs');
 
-var src = './src/assets/imgs/svgs/',
+var src = './svgs/',
     dst = './src/assets/svg';
 
 var data = "", 

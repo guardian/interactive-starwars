@@ -1,3 +1,16 @@
+export default function animateScroll(from, to, duration) {
+    if (duration <= 0) { return; }
+    var difference = to - from;
+    var perTick = difference / duration * 10;
+
+    //console.log(from, perTick, to); 
+    setTimeout(function() {
+        //element.scrollTop = element.scrollTop + perTick;
+        window.scrollTo(0, from+perTick);
+        from += perTick;
+        animateScroll(from, to, duration - 10);
+    }, 10);
+}
 
 function animate(elem, style, unit, from, to, time, prop) {
     if(!elem) { return; }
@@ -14,18 +27,4 @@ function animate(elem, style, unit, from, to, time, prop) {
     },25);
 
     elem.style[style] = from+unit;
-}
-
-export default function animateScroll(from, to, duration) {
-    if (duration <= 0) { return; }
-    var difference = to - from;
-    var perTick = difference / duration * 10;
-
-    //console.log(from, perTick, to); 
-    setTimeout(function() {
-        //element.scrollTop = element.scrollTop + perTick;
-        window.scrollTo(0, from+perTick);
-        from += perTick;
-        animateScroll(from, to, duration - 10);
-    }, 10);
 }
