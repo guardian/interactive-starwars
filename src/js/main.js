@@ -56,5 +56,6 @@ export function init(el, context, config, mediator) {
     });
 
     // preload transit bg images
-    // ...
+    var preloadEl = document.querySelector(".js-transit-preload");
+    preloadEl.classList.add("a-transit");
 }

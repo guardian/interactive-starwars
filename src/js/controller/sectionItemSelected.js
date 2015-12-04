@@ -26,7 +26,7 @@ export function addItemSelected(sectionEl, d) {
     // display transition effects
     var pageY = pageEl.scrollTop;       
     if (isMobile()) {
-        transitEl.classList.add("a-transit-"+d.side);
+        transitEl.classList.add("a-transit");//-"+d.side);
         transitEl.style.top = pageY + "px";
     } else {
         mainEl.classList.add("a-hyperspace");
@@ -43,7 +43,7 @@ export function addItemSelected(sectionEl, d) {
     window.setTimeout(() => {
         addItemBio(d);
         mainEl.classList.add("l-lock");
-        if (isMobile()) { transitEl.classList.remove("a-transit-"+d.side); }
+        if (isMobile()) { transitEl.classList.remove("a-transit");}//-"+d.side); }
         else { mainEl.classList.remove("a-hyperspace"); }
         listEls.classed("a-zoom-in", false)
                .classed("a-zoom-out", false);
