@@ -1,15 +1,15 @@
-// variables 
-$radius-mid:  100px;  // normal
+/* Variables */
+$radius-mid:  100px; // normal
 $radius-big:  128px; // select by user
 $radius-ring: 300px;
 
-// Header styles 
+/* Header styles */
 // override
 .l-header {
     display: none;
 }
 
-// custom: header in main
+// custom: bg
 .l-stars {
     background-image: url('assets/imgs/twinkling.png'), url('assets/imgs/stars.png');
     background-position: 0 0, 0 0;
@@ -38,49 +38,29 @@ $radius-ring: 300px;
     border-bottom: 1px solid #333;
     padding-bottom: 6px;
 }
-.l-standfirst {
-    max-width: 500px;
-    margin-bottom: 24px;
-}
+
 .l-nav {
 	list-style-type: none;
     margin: 0;
     margin-bottom: 36px;
     padding: 0;
+    padding-bottom: 6px;
     border-top: 1px solid white;
     border-bottom: 1px solid white;
 	li { 
 	    cursor: pointer;
         display: inline-block;
-        margin: 6px 0 3px;
+        margin: 6px 0 0;
+        
         // TODO: test othere browsers and devices
-        margin-right: calc((100% - 300px) / 4);
-        &:last-child {
-        margin-right: 0;
-    }}
+        margin-right: 6px;
+        &:last-child { margin-right: 0; }
+        @include mq(nav) { margin-right: calc((100% - 487px) / 4); }    
+    }
 }
 
-.l-prev,
-.l-next {
-    position: fixed;
-    left: 0;
-    width: 100vw;//calc(100% - 20px);
-    z-index: 1;
-    cursor: pointer;
-}
-.l-prev {
-    top: 0;
-    background-image: linear-gradient(black 50%, transparent 100%);
-    padding-bottom: 18px;
-}
-.l-next {
-    bottom: 0;
-    background-image: linear-gradient(transparent 0%, black 50%);
-    padding-top: 18px;
-    margin-bottom: -1px; //hotfix
-}
 
-// custom: section in main
+/* Section */
 section {
     min-height: 100vh;
     margin-bottom: 54px;
@@ -95,14 +75,14 @@ section {
     padding-top: 6px;
 }
 .l-list {
-	position: relative;
+	@extend mw-620;
+    position: relative;
     width: 100%;
     max-width: 600px;
     height: calc(100vh - 100px);
     min-height: 380px;
     max-height: 600px;
     margin: 0 auto;
-    //border: 1px solid rgba(100,100,100,0.5);
 }
 .l-item {
     width: $radius-mid;
@@ -151,7 +131,7 @@ section {
     overflow: hidden;
 }
 
-// custom: modal
+/* Modal */
 .l-modal {
     background-color: black;
     position: fixed;

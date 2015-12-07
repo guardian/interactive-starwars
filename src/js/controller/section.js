@@ -16,13 +16,8 @@ export function initSection(meta) {
     var size = getWindowSize();
     maxRadius = size.width<480 ? 72:100;
     difRadius = size.width<480 ? 12:20;
-    //console.log(size.width, maxRadius);
     
-    metaData = meta;
-    
-    String.prototype.capitalizeFirstLetter = function() {
-        return this.charAt(0).toUpperCase() + this.slice(1);
-    };
+    metaData = meta;    
 }
 
 export function loadSection(el, data, sec, assetPath) {
@@ -32,7 +27,7 @@ export function loadSection(el, data, sec, assetPath) {
     
     secEl = el.querySelector('.js-' + sec);
     secEl.innerHTML = secHTML;
-    secEl.querySelector(".js-type").textContent = (metaData[sec].type).capitalizeFirstLetter();
+    secEl.querySelector(".js-type").textContent = metaData[sec].type;
     secEl.querySelector(".js-title").textContent = metaData[sec].title;
     secEl.querySelector(".js-detail").textContent = metaData[sec].description;
 

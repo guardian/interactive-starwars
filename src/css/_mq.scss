@@ -10,13 +10,14 @@ $mq-responsive: true;
 $mq-breakpoints: (
     mobile:  320px,
     tablet:  740px,
-    desktop: 980px,
-    leftCol: 1140px,
-    wide:    1300px,
+    desktop: 780px,//980px,
+    leftCol: 780px,//1140px,
+    wide:    780px,//1300px,
 
     // Tweakpoints
     desktopAd: 810px,
-    mobileLandscape: 480px
+    mobileLandscape: 480px,
+    nav: 560px
 );
 
 // Define the breakpoint from the $mq-breakpoints list that should

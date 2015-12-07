@@ -1,3 +1,9 @@
+export function addCapToString() {
+    String.prototype.capitalizeFirstLetter = function() {
+        return this.charAt(0).toUpperCase() + this.slice(1);
+    };
+}
+
 export function getDataById(data, key) {
     return data.filter(d => d.id.indexOf(key) !== -1);
 }

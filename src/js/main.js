@@ -3,7 +3,7 @@ import d3 from './lib/d3.lite.min';
 import share from './lib/share';
 import classList from './lib/classList';
 import throttle from './lib/throttle';
-import {getDataById, testMobile, isMobile} from './lib/utils';
+import {addCapToString, getDataById, testMobile, isMobile} from './lib/utils';
 import mainHTML from './view/main.html!text';
 import {initSection, loadSection} from './controller/section';
 import addSectionItemSelected from './controller/sectionItemSelected';
@@ -38,7 +38,14 @@ export function init(el, context, config, mediator) {
             headerSecs = {};
         el.querySelector(".js-headline").textContent = header.title;
         el.querySelector(".js-standfirst").textContent = header.description;
-        
+        d3.select(".js-nav")
+        .selectAll("li")
+        .data(meta).enter()
+        .append("li")
+        .attr("data-nav", d => d.id)
+        .attr("class", d => "btn-nav")
+        .text(d => d.type);
+
         // sections
         meta.forEach(m => headerSecs[m.id] = m);
         initSection(headerSecs);
