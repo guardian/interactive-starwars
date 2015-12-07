@@ -1,7 +1,7 @@
 /* Variables */
 $radius-mid:  100px; // normal
-$radius-big:  128px; // select by user
-$radius-ring: 300px;
+$radius-big:   96px; // select by user
+$radius-ring: 620px;
 
 /* Header styles */
 // override
@@ -40,23 +40,23 @@ $radius-ring: 300px;
 }
 
 .l-nav {
-	list-style-type: none;
+    list-style-type: none;
     margin: 0;
     margin-bottom: 36px;
     padding: 0;
     padding-bottom: 6px;
     border-top: 1px solid white;
     border-bottom: 1px solid white;
-	li { 
-	    cursor: pointer;
+    li { 
+        cursor: pointer;
         display: inline-block;
         margin: 6px 0 0;
-        
+
         // TODO: test othere browsers and devices
         margin-right: 6px;
         &:last-child { margin-right: 0; }
-        @include mq(nav) { margin-right: calc((100% - 487px) / 4); }    
-    }
+        @include mq(nav) { margin-right: calc((100% - 420px) / 4); }    
+}
 }
 
 
@@ -75,7 +75,7 @@ section {
     padding-top: 6px;
 }
 .l-list {
-	@extend mw-620;
+    @extend mw-620;
     position: relative;
     width: 100%;
     max-width: 600px;
@@ -96,36 +96,6 @@ section {
     box-shadow: 0 0 0 2px black, 0 0 0 4px white, 0 0 0 6px black, 0 0 0 7px rgba(255,255,255,0.5);
 }
 
-.l-img {
-    width: $radius-big;
-    height: $radius-big;
-    border-radius: $radius-big/2;
-    margin: -($radius-ring+$radius-big)/2 auto 12px auto;
-    background-color: rgba(50,50,50, 0.5);
-}
-
-.l-rels {
-    margin-top: 36px;
-    padding-top: 12px;
-    border-top: 1px solid #767676;
-    ul { margin-left: 0; }
-    li { 
-        list-style: none;
-        height: 80px;
-        cursor: pointer;
-    }
-}
-.l-rels-img {
-    float: left;
-    width: 64px;
-    height: 64px;
-    border-radius: 32px;
-    background-color: rgba(50,50,50, 0.5);
-}
-.l-rels-txt {
-    margin-left: 76px;
-    //padding-top: 12px;
-}
 .l-lock {
     height: 0;
     overflow: hidden;
@@ -148,4 +118,49 @@ section {
     max-width: 620px;
     margin: auto;
     padding: 12px;
+}
+.l-item-selected {
+    position: relative;
+    padding-top: 36px;
+    pointer-events: none;
+}
+.l-pic {
+    width: 100%;
+    height: auto;
+    margin-top: -42px;
+    margin-bottom: 24px;
+    box-shadow: 0px 1px 8px 3px rgba(0,0,0,0.25);
+}
+.l-img {
+    position: absolute;
+    top: 90px;
+    left: calc(50% - #{$radius-big/2});
+    width: $radius-big;
+    height: $radius-big;
+    border-radius: $radius-big/2;
+    box-shadow: 0px 5px 5px 1px rgba(0,0,0,0.25);
+    background-color: rgba(50,50,50, 0.5);
+}
+
+.l-rels {
+    margin-top: 36px;
+    padding-top: 12px;
+    border-top: 1px solid #767676;
+    ul { margin-left: 0; }
+    li { 
+        list-style: none;
+        min-height: 80px;
+        cursor: pointer;
+}
+}
+.l-rels-img {
+    float: left;
+    width: 64px;
+    height: 64px;
+    border-radius: 32px;
+    background-color: rgba(50,50,50, 0.5);
+}
+.l-rels-txt {
+    margin-left: 76px;
+    //padding-top: 12px;
 }

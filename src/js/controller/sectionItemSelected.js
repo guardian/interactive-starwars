@@ -4,9 +4,6 @@ import {isMobile} from '../lib/utils';
 import svgs from '../../assets/svgfull.json!json';
 
 const bg ={
-    //dark:    ["#4E0375", "#FF5B3A"],
-    //light:   ["#002C59", "#5EBFBA"],
-    //unknown: ["#333333", "#767676"]
     dark:    ["rgba(255, 91, 58, 0.5)", "rgba(78, 3,117, 0.25)"],
     light:   ["rgba( 94,191,186, 0.5)", "rgba( 0,44, 89, 0.25)"],
     unknown: ["rgba(189,189,189, 0.5)", "rgba(51,51, 51, 0.25)"]
@@ -23,8 +20,9 @@ export default function(d) {
 }
 
 export function addItemSelected(sectionEl, d) {
-    // display transition effects
+    // record scrollTop position
     var pageY = pageEl.scrollTop;       
+    // display transition effects
     if (isMobile()) {
         transitEl.classList.add("a-transit");//-"+d.side);
         transitEl.style.top = pageY + "px";
@@ -38,25 +36,25 @@ export function addItemSelected(sectionEl, d) {
     /* modal */
     // open: 
     // 1. show item bio modal page
-    // 2. record scrollTop of main page and lock scroll event
+    // 2. lock scroll event in main page
     // 3. remove transition effects
     window.setTimeout(() => {
-        addItemBio(d);
-        mainEl.classList.add("l-lock");
-        if (isMobile()) { transitEl.classList.remove("a-transit");}//-"+d.side); }
+        addItemBio(d);                                              //1
+        mainEl.classList.add("l-lock");                             //2
+        if (isMobile()) { transitEl.classList.remove("a-transit");} //3
         else { mainEl.classList.remove("a-hyperspace"); }
         listEls.classed("a-zoom-in", false)
                .classed("a-zoom-out", false);
     }, 500);
     
-    // close
-    // 1. unlock scroll event of the main page
-    // 2. hide item bio modal page
+    // close:
+    // 1. in main page, unlock scroll and bring back the scrollTop position
+    // 2. hide modal page
     modalEl_d3.select(".js-close")
     .on("click", () => {
-        mainEl.classList.remove("l-lock");
+        mainEl.classList.remove("l-lock");  //1
         pageEl.scrollTop = pageY;
-        modalEl_d3.classed("d-n", true);
+        modalEl_d3.classed("d-n", true);    //2
     });
 }
 
@@ -70,29 +68,48 @@ function addItemBio(d) {
     modalEl_d3.select(".js-name").text(d.name);
     modalEl_d3.select(".js-desc").text(d.bio);
     modalEl_d3.select(".js-know").text(d.known_info);
-    modalEl_d3.select(".js-actor").text(d.actor? ("cast: " + d.actor):"");
+    modalEl_d3.select(".js-actor").text(d.actor? ("Played by: " + d.actor + "."):"");
     modalEl_d3.select(".js-img")
     .html(() => {var str = svgs[d.id]; return str? svgs[d.id]:"<svg></svg>";});
      
     // remove/add item related list (if exists)
-    modalEl_d3.selectAll(".js-rels li").remove();
+    var relsEl = modalEl_d3.select(".js-rels"); 
+    relsEl.selectAll("li").remove();
+    
     var dataRel = getItemRelatedList(d.related_to, d.relationship);
-    if (dataRel.length === 0) return;
-    addItemRelatedList(dataRel);
+    if (dataRel.length === 0) { 
+        relsEl.classed("d-n", true); 
+    }
+    else { 
+        relsEl.classed("d-n", false); 
+        addItemRelatedList(relsEl, dataRel);
+    }
+
+    // add item image (optional)
+    addItemImage(modalEl_qs.querySelector(".js-pic"), d); 
+}
+
+function addItemImage(el, d) {
+    el.src = d.imgsrc;
+    el.onerror = () => { el.classList.add("d-n");};
+    el.onload = () => { el.classList.remove("d-n"); }; 
 }
 
 function getItemRelatedList(names, rels) {
+    names = names.split(",");
+    names = names.map(n => n.trim());
     rels = rels.split(",");
     rels = rels.map(r => r.trim());
-
-    var dataRel = data.filter(d => names.indexOf(d.name) !== -1);
-    dataRel = dataRel.map((d, i) => { d.relation = rels[i]; return d; });
-
-    return dataRel;
+    
+    return names[0]==="" ? []:names.map((name, i) => {
+        var obj = data.filter(d => d.name === name)[0];
+        obj.relation = rels[i];
+        return obj;
+    });
 }
 
-function addItemRelatedList(dataRel) {
-    var relEls = d3.select(".js-rels")
+function addItemRelatedList(el, dataRel) {
+    var relEls = el.select("ul")
     .selectAll("li")
     .data(dataRel).enter()
     .append("li")
