@@ -33,7 +33,7 @@ export function addItemSelected(sectionEl, d) {
     
     if (isMobile()) {
         transitEl.classList.add("a-transit");
-        transitEl.style.top = (htmlEl.scrollTop - 150) + "px";         
+        transitEl.style.top = (document.body.scrollTop - 150) + "px";         
         // NOTE: hotfix for ipad height calc issue
         //listEls.classed("a-zoom-in2", item => item.id===d.id ? true:false);
     } else {
@@ -71,6 +71,10 @@ function addItemBio(d) {
     modalEl_qs.scrollTop = 0;
 
     // add item bio
+    picEl.src = "";
+    if (d.imgsrc) { picEl.classList.remove("d-n"); }
+    else { picEl.classList.add("d-n"); }
+
     modalEl_d3.classed("d-n", false)
     .style("background-image", "radial-gradient("+bg[d.side][0]+","+bg[d.side][1]+")");
 
@@ -80,7 +84,6 @@ function addItemBio(d) {
     modalEl_d3.select(".js-actor").text(d.actor? ("Played by: " + d.actor + "."):"");
     modalEl_d3.select(".js-img")
     .html(() => {var str = svgs[d.id]; return str? svgs[d.id]:"<svg></svg>";});
-    picEl.classList.add("d-n");
 
     // remove/add item related list (if exists)
     var relsEl = modalEl_d3.select(".js-rels"); 
@@ -96,13 +99,9 @@ function addItemBio(d) {
     }
 
     // add item image (optional)
-    addItemImage(picEl, d); 
-}
-
-function addItemImage(el, d) {
-    el.src = d.imgsrc;
-    el.onload = () => { el.classList.remove("d-n"); }; 
+    //el.onload = () => { el.classList.remove("d-n"); }; 
     //el.onerror = () => { el.classList.add("d-n");};
+    picEl.src = d.imgsrc;
 }
 
 function getItemRelatedList(names, relas) {

@@ -38,20 +38,8 @@ export function init(el, context, config, mediator) {
             headerSecs = {};
         el.querySelector(".js-headline").textContent = header.title;
         el.querySelector(".js-standfirst").textContent = header.description;
-        // add arrow
-        var navEls = d3.select(".js-nav")
-        .selectAll("li")
-        .data(meta).enter()
-        .append("li")
-        .attr("data-nav", d => d.id)
-        .attr("class", d => "btn-nav");
-        navEls
-        .append("span")
-        .html('<svg class="svg-nav" viewBox="0 0 30 30"><path d="M22.8 14.6L15.2 7l-.7.7 5.5 6.6H6v1.5h14l-5.5 6.6.7.7 7.6-7.6v-.9" /></svg>');
-        navEls
-        .append("span")
-        .text(d => d.type);
-        
+        loadNav(meta); 
+            
         // sections
         var size = getWindowSize();
         meta.forEach(m => headerSecs[m.id] = m);
@@ -80,8 +68,32 @@ export function init(el, context, config, mediator) {
         shareEl.addEventListener('click',() => shareFn(network));
     });
 
-    // preload transit bg image and test item image height
+
+    // preload transit bg image
     var preloadEl, testEl;
     preloadEl = document.querySelector(".js-transit-preload");
     preloadEl.classList.add("a-transit");
+    
+    testEl = document.querySelector(".js-test");
+    window.setTimeout(() => {
+        el.querySelector(".js-pic").style.height = testEl.height;
+    }, 1000);
+}
+
+function loadNav(data) {
+    var navEls;
+    
+    navEls = d3.select(".js-nav")
+    .selectAll("li")
+    .data(data).enter()
+    .append("li")
+    .attr("data-nav", d => d.id)
+    .attr("class", d => "btn-nav");
+    
+    navEls
+    .append("span")
+    .html('<svg class="svg-nav" viewBox="0 0 30 30"><path d="M22.8 14.6L15.2 7l-.7.7 5.5 6.6H6v1.5h14l-5.5 6.6.7.7 7.6-7.6v-.9" /></svg>');
+    navEls
+    .append("span")
+    .text(d => d.type);
 }

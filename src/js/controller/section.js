@@ -50,7 +50,7 @@ export function loadSection(el, data, sec, assetPath) {
         d.size = maxRadius - (d.importance-1) * difRadius;
         d.top  = "calc(" + p[i].y + "% - " + d.size/2 + "px)";
         d.left = "calc(" + p[i].x + "% - " + d.size/2 + "px)";
-        d.imgsrc = (!d.img) ? "":assetPath + "/assets/imgs/jpegs/" + d.id + ".jpeg";         
+        d.imgsrc = (!d.img) ? "":assetPath + "/assets/imgs/jpegs/" + d.id + ".jpg";         
 
         //d.image = "url('" + assetPath + "/assets/imgs/jpegs/" + d.id + ".jpeg')";         
         return d;
