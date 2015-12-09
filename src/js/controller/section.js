@@ -1,5 +1,5 @@
 import secHTML from '../view/section.html!text';
-import {getLayout, getWindowSize} from '../lib/utils';
+import {getLayout} from '../lib/utils';
 import addSectionList from '../controller/sectionList';
 
 const maxItems = 21;
@@ -10,13 +10,14 @@ const marginTop = {
 };
 
 var metaData,
-    maxRadius, difRadius;
+    maxRadius, difRadius,
+    sizeWindow;
 
-export function initSection(meta) {
-    var size = getWindowSize();
+export function initSection(meta, size) {
     maxRadius = size.width<480 ? 72:100;
     difRadius = size.width<480 ? 12:20;
-    
+    sizeWindow = size;
+
     metaData = meta;    
 }
 
@@ -27,9 +28,11 @@ export function loadSection(el, data, sec, assetPath) {
     
     secEl = el.querySelector('.js-' + sec);
     secEl.innerHTML = secHTML;
+    secEl.style.minHeight = sizeWindow.height + "px";
     secEl.querySelector(".js-type").textContent = metaData[sec].type;
     secEl.querySelector(".js-title").textContent = metaData[sec].title;
     secEl.querySelector(".js-detail").textContent = metaData[sec].description;
+    secEl.querySelector(".js-list").style.height = (sizeWindow.width>480 ? 600:400) + "px";
 
     // remap items in section data
     var p = getLayout(),
@@ -47,7 +50,7 @@ export function loadSection(el, data, sec, assetPath) {
         d.size = maxRadius - (d.importance-1) * difRadius;
         d.top  = "calc(" + p[i].y + "% - " + d.size/2 + "px)";
         d.left = "calc(" + p[i].x + "% - " + d.size/2 + "px)";
-        d.imgsrc = assetPath + "/assets/imgs/jpegs/" + d.id + ".jpeg";         
+        d.imgsrc = (!d.img) ? "":assetPath + "/assets/imgs/jpegs/" + d.id + ".jpeg";         
 
         //d.image = "url('" + assetPath + "/assets/imgs/jpegs/" + d.id + ".jpeg')";         
         return d;
@@ -55,6 +58,6 @@ export function loadSection(el, data, sec, assetPath) {
 
     // add items to the section
     addSectionList(d3.select(".js-"+sec), data, marginTop[sec]);
+    
+    secEl.classList.remove("d-n");
 }
-
-

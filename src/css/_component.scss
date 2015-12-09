@@ -16,29 +16,31 @@ svg {
     background-color: transparent;
 }
 
-.svg-prev { 
-    transform: rotate(-90deg); 
-    vertical-align: bottom;
-}
-.svg-next { 
+.svg-nav {
     transform: rotate(90deg); 
-    vertical-align: middle;
+    width: 18px;
+    height: 18px;    
+    background-color: transparent;
+    fill: white;
+    border: 1px solid white;
+    margin-right: 6px;
 }
 
 // buttos (and svg related tags)
-.btn-nav,
 .btn-theatre {
     color: white;
     @include fs-textSans(4);
     background-color: transparent;
-    border: 1px solid white;
+    border: 1px solid #444;
     border-radius: 15px;
     outline: 0;
     margin: 48px 0 12px;
-    padding: 3px 15px 2px 15px;
+    padding: 5px 18px 4px 18px;
 }
-.btn-theatre {
-    opacity: 0.5;
+.btn-nav {
+    color: white;
+    @include fs-textSans(4);
+    cursor: pointer; 
 }
 
 .btn-close {

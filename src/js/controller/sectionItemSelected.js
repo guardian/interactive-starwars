@@ -9,29 +9,37 @@ const bg ={
     unknown: ["rgba(189,189,189, 0.5)", "rgba(51,51, 51, 0.25)"]
 };
 
-var pageEl, mainEl, transitEl, listEls, modalEl_qs, modalEl_d3, data;
-export default function(d) {
-    pageEl = document.body;
+var htmlEl, mainEl, transitEl, listEls, modalEl_qs, modalEl_d3, picEl, data;
+export default function(d, size) {
+    htmlEl = document.querySelector("html");
     mainEl = document.querySelector(".js-main");
     transitEl = document.querySelector(".js-transit");
-    modalEl_qs = document.querySelector(".js-modal"); //TODO: remove duplicates
+    transitEl.style.left = 0;
+    transitEl.style.height = (size.height + 200) + "px";    // NOTE: hotfix for ipad height calc
+
+    modalEl_qs = document.querySelector(".js-modal");       // TODO: remove duplicates
     modalEl_d3 = d3.select(".js-modal").html(itemHTML);
+    picEl = modalEl_qs.querySelector(".js-pic");
+    modalEl_qs.style.minHeight = size.height + "px"; 
+        
     data = d;
 }
 
 export function addItemSelected(sectionEl, d) {
-    // record scrollTop position
-    var pageY = pageEl.scrollTop;       
     // display transition effects
+    listEls = sectionEl.selectAll(".js-list div")
+    .classed("a-zoom-out",item => item.id!==d.id ? true:false)
+    .classed("a-zoom-in1", item => item.id===d.id ? true:false);
+    
     if (isMobile()) {
-        transitEl.classList.add("a-transit");//-"+d.side);
-        transitEl.style.top = pageY + "px";
+        transitEl.classList.add("a-transit");
+        transitEl.style.top = (htmlEl.scrollTop - 150) + "px";         
+        // NOTE: hotfix for ipad height calc issue
+        //listEls.classed("a-zoom-in2", item => item.id===d.id ? true:false);
     } else {
         mainEl.classList.add("a-hyperspace");
+        //listEls.classed("a-zoom-in1", item => item.id===d.id ? true:false);
     }
-    listEls = sectionEl.selectAll(".js-list div")
-          .classed("a-zoom-out",item => item.id!==d.id ? true:false)
-          .classed("a-zoom-in", item => item.id===d.id ? true:false);
     
     /* modal */
     // open: 
@@ -39,11 +47,12 @@ export function addItemSelected(sectionEl, d) {
     // 2. lock scroll event in main page
     // 3. remove transition effects
     window.setTimeout(() => {
-        addItemBio(d);                                              //1
-        mainEl.classList.add("l-lock");                             //2
-        if (isMobile()) { transitEl.classList.remove("a-transit");} //3
-        else { mainEl.classList.remove("a-hyperspace"); }
-        listEls.classed("a-zoom-in", false)
+        addItemBio(d);                              // 1
+        htmlEl.style.overflowY = "hidden";          // 2 and fix IE scrollbar issue
+        mainEl.classList.remove("a-hyperspace");    // 3
+        transitEl.classList.remove("a-transit");
+        listEls.classed("a-zoom-in1", false)
+               .classed("a-zoom-in2", false)
                .classed("a-zoom-out", false);
     }, 500);
     
@@ -52,9 +61,9 @@ export function addItemSelected(sectionEl, d) {
     // 2. hide modal page
     modalEl_d3.select(".js-close")
     .on("click", () => {
-        mainEl.classList.remove("l-lock");  //1
-        pageEl.scrollTop = pageY;
-        modalEl_d3.classed("d-n", true);    //2
+        transitEl.classList.remove("a-transit");    // NOTE: just in case
+        htmlEl.style.overflowY = "scroll";          // 1 and fix IE scrollbar issue
+        modalEl_d3.classed("d-n", true);            // 2
     });
 }
 
@@ -71,39 +80,38 @@ function addItemBio(d) {
     modalEl_d3.select(".js-actor").text(d.actor? ("Played by: " + d.actor + "."):"");
     modalEl_d3.select(".js-img")
     .html(() => {var str = svgs[d.id]; return str? svgs[d.id]:"<svg></svg>";});
-     
+    picEl.classList.add("d-n");
+
     // remove/add item related list (if exists)
     var relsEl = modalEl_d3.select(".js-rels"); 
     relsEl.selectAll("li").remove();
     
     var dataRel = getItemRelatedList(d.related_to, d.relationship);
-    if (dataRel.length === 0) { 
-        relsEl.classed("d-n", true); 
-    }
-    else { 
+    if (dataRel) { 
         relsEl.classed("d-n", false); 
         addItemRelatedList(relsEl, dataRel);
     }
+    else { 
+        relsEl.classed("d-n", true); 
+    }
 
     // add item image (optional)
-    addItemImage(modalEl_qs.querySelector(".js-pic"), d); 
+    addItemImage(picEl, d); 
 }
 
 function addItemImage(el, d) {
     el.src = d.imgsrc;
-    el.onerror = () => { el.classList.add("d-n");};
     el.onload = () => { el.classList.remove("d-n"); }; 
+    //el.onerror = () => { el.classList.add("d-n");};
 }
 
-function getItemRelatedList(names, rels) {
-    names = names.split(",");
-    names = names.map(n => n.trim());
-    rels = rels.split(",");
-    rels = rels.map(r => r.trim());
+function getItemRelatedList(names, relas) {
+    var nameList = (names.split(",")).map(n => n.trim()),
+        relaList = (relas.split(",")).map(r => r.trim());
     
-    return names[0]==="" ? []:names.map((name, i) => {
+    return names==="" ? undefined:nameList.map((name, i) => {
         var obj = data.filter(d => d.name === name)[0];
-        obj.relation = rels[i];
+        obj.relation = relaList[i];
         return obj;
     });
 }
@@ -127,7 +135,7 @@ function addItemRelatedList(el, dataRel) {
     .append("div")
     .attr("class", "l-rels-txt")
     .html(d => '<h5>' + d.name + '</h5>' + 
-          '<p class="fs-textSans1 c-g4">' + d.relation + '</p>'
+          '<p class="f-rels-txt">' + d.relation + '</p>'
     );
 }
 

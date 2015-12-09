@@ -50,7 +50,7 @@ function addHammerEvents(el, d) {
 
     mc.add(new Hammer.Tap({event: 'longtap', time: 500})); 
     mc.on("longtap press", e => {
-        console.log("tap or press");
+        //console.log("tap or press");
         addItemSelected(el, d);
     });
 }

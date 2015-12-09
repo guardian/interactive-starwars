@@ -3,10 +3,10 @@ import d3 from './lib/d3.lite.min';
 import share from './lib/share';
 import classList from './lib/classList';
 import throttle from './lib/throttle';
-import {addCapToString, getDataById, testMobile, isMobile} from './lib/utils';
+import {addCapToString, getDataById, getWindowSize, testMobile, isMobile} from './lib/utils';
 import mainHTML from './view/main.html!text';
 import {initSection, loadSection} from './controller/section';
-import addSectionItemSelected from './controller/sectionItemSelected';
+import initSectionItemSelected from './controller/sectionItemSelected';
 import navigationOnScroll from './controller/navigation';
 
 var shareFn = share('Interactive title', 'http://gu.com/p/URL', '#Interactive');
@@ -38,21 +38,29 @@ export function init(el, context, config, mediator) {
             headerSecs = {};
         el.querySelector(".js-headline").textContent = header.title;
         el.querySelector(".js-standfirst").textContent = header.description;
-        d3.select(".js-nav")
+        // add arrow
+        var navEls = d3.select(".js-nav")
         .selectAll("li")
         .data(meta).enter()
         .append("li")
         .attr("data-nav", d => d.id)
-        .attr("class", d => "btn-nav")
+        .attr("class", d => "btn-nav");
+        navEls
+        .append("span")
+        .html('<svg class="svg-nav" viewBox="0 0 30 30"><path d="M22.8 14.6L15.2 7l-.7.7 5.5 6.6H6v1.5h14l-5.5 6.6.7.7 7.6-7.6v-.9" /></svg>');
+        navEls
+        .append("span")
         .text(d => d.type);
-
+        
         // sections
+        var size = getWindowSize();
         meta.forEach(m => headerSecs[m.id] = m);
-        initSection(headerSecs);
+        initSection(headerSecs, size);
         secs.forEach(s => loadSection(el, getDataById(data, s), s, config.assetPath));
-        addSectionItemSelected(data);
+        initSectionItemSelected(data, size);
          
         navigationOnScroll(el);
+        el.querySelector("nav").classList.remove("d-n");
     });
 
 
@@ -72,7 +80,8 @@ export function init(el, context, config, mediator) {
         shareEl.addEventListener('click',() => shareFn(network));
     });
 
-    // preload transit bg images
-    var preloadEl = document.querySelector(".js-transit-preload");
+    // preload transit bg image and test item image height
+    var preloadEl, testEl;
+    preloadEl = document.querySelector(".js-transit-preload");
     preloadEl.classList.add("a-transit");
 }

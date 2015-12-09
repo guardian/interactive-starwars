@@ -16,5 +16,5 @@
     };
 
     /* init - you can init any event */
-    throttle ("scroll", "optimizedScroll");
+    //throttle ("scroll", "optimizedScroll");
 })();

@@ -3,38 +3,57 @@
 // General
 .fw-b { font-weight: bold; }
 .fs-i { font-style: italic; }
-.fs-textSans1 { @include fs-textSans(1); }
 .fs-textSans4 { @include fs-textSans(4); }
 
-h1 { @include fs-headline(6); }
-h2 { @include fs-header(4); }
-h3 { @include fs-header(5); }
-h4 { @include fs-header(1); }
-h5 { @include fs-textSans(4); font-size: 15px; }
-p  { @include fs-bodyCopy(1); }
-
+h1 { @include fs-headline(5); font-weight: 100; }
+h2 { @include fs-header(3); }
+h3 { @include fs-headline(4); font-weight: 900; }
+h4 { @include fs-header(2); }
+h5 { @include fs-textSans(4); }
 
 // Header
-/*.f-headline {
-    @include fs-header(5);
-}*/
 .f-standfirst {
     color: #bdbdbd;
-    @include fs-bodyCopy(2);
+    @include fs-bodyHeading(2);
+    font-weight: 100;
 }
-
-.f-prev,
-.f-next {
-    color: #bdbdbd;
-    @include fs-textSans(2);
-    text-align: center;
-}
-
 
 // Sections
+.f-detail {
+    @include fs-bodyCopy(2);
+    font-size: 15px;
+    line-height: 22px;
+}
+
 .f-item {
     @include fs-textSans(1);    
     text-shadow: 1px 1px 2px black;
     text-align: center;
     line-height: 14px;
+}
+
+// Modal
+.f-item-txt { 
+    @include fs-textSans(4);
+    font-size: 15px; 
+    line-height: 22px;
+}
+.f-rels-txt {
+    color: #dcdcdc; 
+    @include fs-textSans(1);
+    line-height: 18px;
+}
+
+
+@include mq(mobileLandscape) {
+h1 { @include fs-headline(9); font-weight: 100; }
+h2 { @include fs-headline(5); font-weight: 900; }
+h3 { @include fs-headline(6); font-weight: 900; }
+h4 { @include fs-header(4); }
+h5 { @include fs-textSans(4); font-size: 15px; }
+.f-standfirst { @include fs-bodyHeading(4); font-weight: 100; }
+.f-detail { @include fs-bodyCopy(2); }
+.f-item { @include fs-textSans(3); }
+.f-item-txt { font-size: 16px; } 
+.f-rels-txt { font-size: 14px; }
 }
