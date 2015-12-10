@@ -35,17 +35,18 @@ export function init(el, context, config, mediator) {
         
         // furniture
         var header = meta.splice(0, 1)[0],
+            headerNav = meta.filter(m => ("cha loc org tec oth").indexOf(m.id)>-1),
             headerSecs = {};
         el.querySelector(".js-headline").textContent = header.title;
         el.querySelector(".js-standfirst").textContent = header.description;
-        loadNav(meta); 
-            
+        loadNav(headerNav); 
+        
         // sections
         var size = getWindowSize();
         meta.forEach(m => headerSecs[m.id] = m);
         initSection(headerSecs, size);
         secs.forEach(s => loadSection(el, getDataById(data, s), s, config.assetPath));
-        initSectionItemSelected(data, size);
+        initSectionItemSelected(data, size, config.assetPath);
          
         navigationOnScroll(el);
         el.querySelector("nav").classList.remove("d-n");
@@ -73,11 +74,6 @@ export function init(el, context, config, mediator) {
     var preloadEl, testEl;
     preloadEl = document.querySelector(".js-transit-preload");
     preloadEl.classList.add("a-transit");
-    
-    testEl = document.querySelector(".js-test");
-    window.setTimeout(() => {
-        el.querySelector(".js-pic").style.height = testEl.height;
-    }, 1000);
 }
 
 function loadNav(data) {

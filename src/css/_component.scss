@@ -16,12 +16,21 @@ svg {
     background-color: transparent;
 }
 
+.svg-top,
 .svg-nav {
-    transform: rotate(90deg); 
+    background-color: transparent;
+}
+.svg-top {
+    fill: #dcdcdc;
+    width: 24px;
+    height: 24px;    
+    transform: rotate(270deg); 
+}
+.svg-nav {
+    fill: white;
     width: 18px;
     height: 18px;    
-    background-color: transparent;
-    fill: white;
+    transform: rotate(90deg); 
     border: 1px solid white;
     margin-right: 6px;
 }

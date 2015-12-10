@@ -3,6 +3,7 @@
 // General
 .fw-b { font-weight: bold; }
 .fs-i { font-style: italic; }
+.fs-textSans1 { @include fs-textSans(1); }
 .fs-textSans4 { @include fs-textSans(4); }
 
 h1 { @include fs-headline(5); font-weight: 100; }

@@ -76,10 +76,12 @@ section {
 }
 .l-cha {
     border-top: none; 
+    .l-top { display: none; }
 }
 
-.l-type {
-    padding-top: 6px;
+.l-top {
+    float: right;
+    margin-top: 10px;
 }
 .l-list {
     @extend mw-620;
@@ -131,7 +133,7 @@ section {
 }
 .l-img {
     position: absolute;
-    top: 90px;
+    top: 84px;
     left: calc(50% - #{$radius-big/2});
     width: $radius-big;
     height: $radius-big;

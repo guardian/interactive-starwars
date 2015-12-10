@@ -9,8 +9,11 @@ const bg ={
     unknown: ["rgba(189,189,189, 0.5)", "rgba(51,51, 51, 0.25)"]
 };
 
-var htmlEl, mainEl, transitEl, listEls, modalEl_qs, modalEl_d3, picEl, data;
-export default function(d, size) {
+var htmlEl, mainEl, transitEl,
+    modalEl_qs, modalEl_d3, listEls, picEl, 
+    data;
+
+export default function(d, size, assetPath) {
     htmlEl = document.querySelector("html");
     mainEl = document.querySelector(".js-main");
     transitEl = document.querySelector(".js-transit");
@@ -18,10 +21,10 @@ export default function(d, size) {
     transitEl.style.height = (size.height + 200) + "px";    // NOTE: hotfix for ipad height calc
 
     modalEl_qs = document.querySelector(".js-modal");       // TODO: remove duplicates
-    modalEl_d3 = d3.select(".js-modal").html(itemHTML);
+    modalEl_d3 = d3.select(".js-modal").html(itemHTML.replace(/%assetPath%/g, assetPath));
+    //modalEl_qs.style.minHeight = size.height + "px"; 
     picEl = modalEl_qs.querySelector(".js-pic");
-    modalEl_qs.style.minHeight = size.height + "px"; 
-        
+
     data = d;
 }
 
@@ -54,7 +57,7 @@ export function addItemSelected(sectionEl, d) {
         listEls.classed("a-zoom-in1", false)
                .classed("a-zoom-in2", false)
                .classed("a-zoom-out", false);
-    }, 500);
+    }, 600);
     
     // close:
     // 1. in main page, unlock scroll and bring back the scrollTop position
@@ -72,11 +75,13 @@ function addItemBio(d) {
 
     // add item bio
     picEl.src = "";
+    modalEl_d3.classed("d-n", false)
+    .style("background-image", "radial-gradient("+bg[d.side][0]+","+bg[d.side][1]+")");
+    
+    picEl.style.height = picEl.offsetWidth*(402/780) + "px";
     if (d.imgsrc) { picEl.classList.remove("d-n"); }
     else { picEl.classList.add("d-n"); }
 
-    modalEl_d3.classed("d-n", false)
-    .style("background-image", "radial-gradient("+bg[d.side][0]+","+bg[d.side][1]+")");
 
     modalEl_d3.select(".js-name").text(d.name);
     modalEl_d3.select(".js-desc").text(d.bio);
@@ -99,9 +104,13 @@ function addItemBio(d) {
     }
 
     // add item image (optional)
-    //el.onload = () => { el.classList.remove("d-n"); }; 
-    //el.onerror = () => { el.classList.add("d-n");};
     picEl.src = d.imgsrc;
+    picEl.onload = () => { picEl.style.height = "auto"; }; 
+    //picEl.onerror = () => { el.classList.add("d-n");};
+    
+    var rect = modalEl_qs.querySelector(".js-rels").getBoundingClientRect(); 
+    modalEl_qs.querySelector(".l-selected").style.height = rect.bottom + "px";
+    //console.log("height:", rect.bottom);
 }
 
 function getItemRelatedList(names, relas) {
