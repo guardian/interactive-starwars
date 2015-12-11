@@ -2,19 +2,19 @@ import iframeMessenger from 'guardian/iframe-messenger';
 import d3 from './lib/d3.lite.min';
 import share from './lib/share';
 import classList from './lib/classList';
-import throttle from './lib/throttle';
-import {addCapToString, getDataById, getWindowSize, testMobile, isMobile} from './lib/utils';
+import {addCapToString, getDataById, getWindowSize, testMobile, isMobile, testApp, isApp} from './lib/utils';
 import mainHTML from './view/main.html!text';
+import {loadNavigation, addNavigationOnScroll} from './controller/navigation';
 import {initSection, loadSection} from './controller/section';
 import initSectionItemSelected from './controller/sectionItemSelected';
-import navigationOnScroll from './controller/navigation';
 
 var shareFn = share('Interactive title', 'http://gu.com/p/URL', '#Interactive');
 
 export function init(el, context, config, mediator) {
     iframeMessenger.enableAutoResize(); 
     testMobile();
-    
+    testApp();
+
     // load main page 
     el.innerHTML = mainHTML.replace(/%assetPath%/g, config.assetPath);
     var mainEl = el.querySelector(".js-main");
@@ -31,25 +31,29 @@ export function init(el, context, config, mediator) {
         
         var meta = json.sheets.furniture,
             data = json.sheets.data,
-            secs = ["cha", "loc", "org", "tec", "oth"];
+            link = json.sheets.related_links,
+            secs = ["cha", "org", "tec"];
         
         // furniture
         var header = meta.splice(0, 1)[0],
-            headerNav = meta.filter(m => ("cha loc org tec oth").indexOf(m.id)>-1),
-            headerSecs = {};
+            headerNav = meta.filter(m => ("cha org tec").indexOf(m.id)>-1);
         el.querySelector(".js-headline").textContent = header.title;
         el.querySelector(".js-standfirst").textContent = header.description;
-        loadNav(headerNav); 
+        loadNavigation(headerNav); 
         
         // sections
-        var size = getWindowSize();
-        meta.forEach(m => headerSecs[m.id] = m);
-        initSection(headerSecs, size);
+        var size = getWindowSize(),
+            id2title = {};
+        meta.forEach(m => id2title[m.id] = m);
+        initSection(id2title, size);
         secs.forEach(s => loadSection(el, getDataById(data, s), s, config.assetPath));
         initSectionItemSelected(data, size, config.assetPath);
-         
-        navigationOnScroll(el);
+        
+        // navigation and related new links    
+        addNavigationOnScroll(el);
         el.querySelector("nav").classList.remove("d-n");
+        
+        addRelatedNewsLinks(link);       
     });
 
 
@@ -76,20 +80,15 @@ export function init(el, context, config, mediator) {
     preloadEl.classList.add("a-transit");
 }
 
-function loadNav(data) {
-    var navEls;
-    
-    navEls = d3.select(".js-nav")
+function addRelatedNewsLinks(data){
+    d3.select(".js-link")
     .selectAll("li")
     .data(data).enter()
     .append("li")
-    .attr("data-nav", d => d.id)
-    .attr("class", d => "btn-nav");
-    
-    navEls
-    .append("span")
-    .html('<svg class="svg-nav" viewBox="0 0 30 30"><path d="M22.8 14.6L15.2 7l-.7.7 5.5 6.6H6v1.5h14l-5.5 6.6.7.7 7.6-7.6v-.9" /></svg>');
-    navEls
-    .append("span")
-    .text(d => d.type);
+    .append("div")
+    .append("a")
+    .attr("href", d => d.url)
+    .append("p")
+    .attr("class", "f-link")
+    .text(d => d.headline); 
 }

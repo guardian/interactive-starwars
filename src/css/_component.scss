@@ -36,16 +36,28 @@ svg {
 }
 
 // buttos (and svg related tags)
+.btn-back,
 .btn-theatre {
     color: white;
     @include fs-textSans(4);
     background-color: transparent;
-    border: 1px solid #444;
     border-radius: 15px;
     outline: 0;
-    margin: 48px 0 12px;
     padding: 5px 18px 4px 18px;
 }
+.btn-back {
+    color: rgba(255,255,255, 0.25);
+    border: 1px solid rgba(255,255,255, 0.25);
+    &:hover {
+    color: white;
+    border-color: white;
+    }
+}
+.btn-theatre {
+    border: 1px solid #444;
+    margin: 48px 0 12px;
+}
+
 .btn-nav {
     color: white;
     @include fs-textSans(4);

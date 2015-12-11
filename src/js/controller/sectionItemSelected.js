@@ -1,6 +1,6 @@
 import Hammer from '../lib/hammer.min';
 import itemHTML from '../view/sectionItemSelected.html!text';
-import {isMobile} from '../lib/utils';
+import {isMobile, isApp} from '../lib/utils';
 import svgs from '../../assets/svgfull.json!json';
 
 const bg ={
@@ -31,17 +31,17 @@ export default function(d, size, assetPath) {
 export function addItemSelected(sectionEl, d) {
     // display transition effects
     listEls = sectionEl.selectAll(".js-list div")
-    .classed("a-zoom-out",item => item.id!==d.id ? true:false)
-    .classed("a-zoom-in1", item => item.id===d.id ? true:false);
+    .classed("a-zoom-out",item => item.id!==d.id ? true:false);
+    //.classed("a-zoom-in1", item => item.id===d.id ? true:false);
     
     if (isMobile()) {
         transitEl.classList.add("a-transit");
         transitEl.style.top = (document.body.scrollTop - 150) + "px";         
         // NOTE: hotfix for ipad height calc issue
-        //listEls.classed("a-zoom-in2", item => item.id===d.id ? true:false);
+        listEls.classed("a-zoom-in2", item => item.id===d.id ? true:false);
     } else {
         mainEl.classList.add("a-hyperspace");
-        //listEls.classed("a-zoom-in1", item => item.id===d.id ? true:false);
+        listEls.classed("a-zoom-in1", item => item.id===d.id ? true:false);
     }
     
     /* modal */
@@ -57,16 +57,27 @@ export function addItemSelected(sectionEl, d) {
         listEls.classed("a-zoom-in1", false)
                .classed("a-zoom-in2", false)
                .classed("a-zoom-out", false);
+        
+        if(isApp()) { 
+            window.GuardianJSInterface.registerRelatedCardsTouch(true); 
+            //console.log("touch on");
+        }
+        modalEl_qs.scrollTop = 0;
     }, 600);
     
     // close:
     // 1. in main page, unlock scroll and bring back the scrollTop position
-    // 2. hide modal page
-    modalEl_d3.select(".js-close")
+    // 2. hide modal page and set it's scroll position to 0
+    modalEl_d3.selectAll(".js-close")
     .on("click", () => {
         transitEl.classList.remove("a-transit");    // NOTE: just in case
         htmlEl.style.overflowY = "scroll";          // 1 and fix IE scrollbar issue
         modalEl_d3.classed("d-n", true);            // 2
+        
+        if(isApp()) { 
+            window.GuardianJSInterface.registerRelatedCardsTouch(false); 
+            //console.log("touch off");
+        }
     });
 }
 
@@ -119,7 +130,7 @@ function getItemRelatedList(names, relas) {
     
     return names==="" ? undefined:nameList.map((name, i) => {
         var obj = data.filter(d => d.name === name)[0];
-        obj.relation = relaList[i];
+        obj.relation = relaList[i]? relaList[i]:"";
         return obj;
     });
 }
@@ -141,13 +152,14 @@ function addItemRelatedList(el, dataRel) {
     
     relEls
     .append("div")
-    .attr("class", "l-rels-txt")
+    .attr("class", "ml-76")
     .html(d => '<h5>' + d.name + '</h5>' + 
           '<p class="f-rels-txt">' + d.relation + '</p>'
     );
 }
 
 function addHammerEvents(d) {
+    
     var mc = Hammer(modalEl_qs.querySelector("#rel-"+d.id));
     mc.on("tap", e => {
         addItemBio(d);

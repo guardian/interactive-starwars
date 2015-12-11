@@ -5,8 +5,7 @@ import addSectionList from '../controller/sectionList';
 const maxItems = 21;
 
 const marginTop = {
-    cha:  24, tec: -36,
-    loc: -60, org: -60, oth: -60
+    cha:  24, tec: 0, org: 0
 };
 
 var metaData,

@@ -19,29 +19,7 @@
     animation: scale 1s ease infinite;
 }}
 
-// transit between section and section item selected
-// bg
-/*.a-hyperspace {
-    animation: space 0.5s ease-out 1;
-}*
-/*@keyframes space {
-    25%  { background-size: 0 0, 1280px 1600px; }
-    50%  { background-size: 0 0, 12800px 16000px; }
-    100% { background-size: 0 0, 128000px 160000px; }
-}*/
-@keyframes space {
-    25%  { background-size: 0 0, 1280px 1600px; }
-    50%  { background-size: 0 0, 12800px 1600px; }
-    100% { background-size: 0 0, 2000000px 1600px; }
-}
-.a-transit-dark { 
-    background-image: url("assets/imgs/gifs/hyperspace_dark.gif");
-}
-.a-transit-light { 
-    background-image: url("assets/imgs/gifs/hyperspace_light.gif");
-}
-.a-transit, 
-.a-transit-unknown { 
+.a-transit { 
     background-image: url("assets/imgs/gifs/hyperspace_unknown.gif");
 }
 
@@ -64,12 +42,13 @@
 }
 @keyframes zoom-in1 {
     40%  { transform: scale(2);}    // translate(0, 0)} 
-    75%  { transform: scale(2);}    // translate(400px,0); }
-    100% { transform: scale(30);}   // translate(600px,0); }
+    85%  { transform: scale(2);}    // translate(400px,0); }
+    100% { transform: scale(20);}   // translate(600px,0); }
 }
 @keyframes zoom-in2 {
     40%  { transform: scale(2);}    // translate(0, 0)} 
-    100% { transform: scale(2);}    // translate(600px,0); }
+    90%  { transform: scale(2);}    // translate(400px,0); }
+    100% { transform: scale(10);}    // translate(600px,0); }
 }
 
 // section item selected

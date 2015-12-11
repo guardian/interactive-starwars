@@ -1,5 +1,10 @@
 @import '../../bower_components/guss-typography/_typography.scss';
 
+// override
+h1, h2, h3, h4, h5, p {
+    margin: 0;
+}
+
 // General
 .fw-b { font-weight: bold; }
 .fs-i { font-style: italic; }
@@ -57,4 +62,14 @@ h5 { @include fs-textSans(4); font-size: 15px; }
 .f-item { @include fs-textSans(3); }
 .f-item-txt { font-size: 16px; } 
 .f-rels-txt { font-size: 14px; }
+}
+
+// Links
+.f-header {
+    @extend h2;
+}
+.f-link, .f-link:hover { 
+    color: #333;
+    @include fs-bodyHeading(2); 
+    line-height: 20px;
 }

@@ -21,7 +21,7 @@ export function getPolygon(n) {
             ptY = Math.round((y + r * Math.cos(0.5 + 2*Math.PI*i/n)) * 100 / s);
         pts.push({x: ptX, y: ptY});
     }
-    console.log(pts);
+    //console.log(pts);
     return pts;
 }
 
@@ -56,12 +56,19 @@ export function getLayout() {
     ];
 }
 
-var flagMobile;
+var flagMobile, flagApp;
 export function testMobile() {
     flagMobile = (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent));
 }
 export function isMobile() {
     return flagMobile;
+}
+export function testApp() {
+    flagApp = window.GuardianJSInterface ? true:false;
+    //console.log("isApp", flagApp);
+}
+export function isApp() {
+    return flagApp;
 }
 
 export function getWindowSize() {
