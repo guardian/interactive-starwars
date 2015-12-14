@@ -14,7 +14,7 @@ export function loadNavigation(data) {
     
     navEls
     .append("span")
-    .html('<svg class="svg-nav" viewBox="0 0 30 30"><path d="M22.8 14.6L15.2 7l-.7.7 5.5 6.6H6v1.5h14l-5.5 6.6.7.7 7.6-7.6v-.9" /></svg>');
+    .html('<svg class="svg-nav" viewBox="0 0 30 30"><path d="M15.4,23.5l7.6-7.6l-0.7-0.7l-6.6,5.5v-14h-1.5v14l-6.6-5.5l-0.7,0.7l7.6,7.6H15.4" /></svg>');
     navEls
     .append("span")
     .text(d => d.type);

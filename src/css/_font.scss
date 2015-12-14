@@ -47,7 +47,7 @@ h5 { @include fs-textSans(4); }
 .f-rels-txt {
     color: #dcdcdc; 
     @include fs-textSans(1);
-    line-height: 18px;
+    padding-bottom: 12px;
 }
 
 

@@ -30,11 +30,10 @@ export default function(d, size, assetPath) {
 
 export function addItemSelected(sectionEl, d) {
     // display transition effects
-    listEls = sectionEl.selectAll(".js-list div")
-    .classed("a-zoom-out",item => item.id!==d.id ? true:false);
-    //.classed("a-zoom-in1", item => item.id===d.id ? true:false);
+    listEls = sectionEl.selectAll(".js-list div");
+    listEls.classed("a-zoom-out",item => item.id!==d.id ? true:false);
     
-    if (isMobile()) {
+    if (isMobile() && !isApp()) {
         transitEl.classList.add("a-transit");
         transitEl.style.top = (document.body.scrollTop - 150) + "px";         
         // NOTE: hotfix for ipad height calc issue
@@ -81,8 +80,7 @@ export function addItemSelected(sectionEl, d) {
 }
 
 function addItemProfile(d) {
-    modalEl_qs.scrollTop = 0;
-
+    
     // add item profile
     picEl.src = "";
     modalEl_d3.classed("d-n", false)
@@ -92,13 +90,14 @@ function addItemProfile(d) {
     if (d.imgsrc) { picEl.classList.remove("d-n"); }
     else { picEl.classList.add("d-n"); }
 
-
     modalEl_d3.select(".js-name").text(d.name);
     modalEl_d3.select(".js-desc").text(d.bio);
     modalEl_d3.select(".js-know").text(d.known_info);
     modalEl_d3.select(".js-actor").text(d.actor? ("Played by: " + d.actor + "."):"");
     modalEl_d3.select(".js-img")
     .html(() => {var str = svgs[d.id]; return str? svgs[d.id]:"<svg></svg>";});
+    
+    modalEl_qs.scrollTop = 0;
 
     // remove/add item related list (if exists)
     var relsEl = modalEl_d3.select(".js-rels"); 
@@ -126,8 +125,8 @@ function addItemProfile(d) {
 
 function addItemProfileWithTransition(d) {
     contentEl.classList.add("a-fade-effect");
-        window.setTimeout(() => addItemProfile(d), 500);
-        window.setTimeout(() => contentEl.classList.remove("a-fade-effect", false), 1500);      
+        window.setTimeout(() => addItemProfile(d), 600);
+        window.setTimeout(() => contentEl.classList.remove("a-fade-effect"), 1500); 
 }
 
 function getItemRelatedList(names, relas) {

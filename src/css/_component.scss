@@ -24,13 +24,13 @@ svg {
     fill: #dcdcdc;
     width: 24px;
     height: 24px;    
-    transform: rotate(270deg); 
+    //transform: rotate(270deg); 
 }
 .svg-nav {
     fill: white;
     width: 18px;
     height: 18px;    
-    transform: rotate(90deg); 
+    //transform: rotate(90deg); 
     border: 1px solid white;
     margin-right: 6px;
 }
@@ -46,8 +46,8 @@ svg {
     padding: 5px 18px 4px 18px;
 }
 .btn-back {
-    color: rgba(255,255,255, 0.25);
-    border: 1px solid rgba(255,255,255, 0.25);
+    color: white;
+    border: 1px solid white;
     &:hover {
     color: white;
     border-color: white;
@@ -69,7 +69,13 @@ svg {
 .btn-close {
     cursor: pointer;
     height: 32px;
-    path { fill: rgba(255,255,255,0.25); }
+    border: 1px solid white;
+    border-radius: 32px;
+    padding: 12px;
+    position: fixed;
+    top: 12px;
+    right: 12px;
+    path { fill: white; }
     &:hover path { fill: white; }
 }
 

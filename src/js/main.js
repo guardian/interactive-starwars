@@ -21,7 +21,8 @@ export function init(el, context, config, mediator) {
 
     // load json data 
     var key = "1KfSbVnGHzwAkfzZ2pebC6yhVjV88xsWnXubCAu9bIt4",
-        url = "http://interactive.guim.co.uk/docsdata-test/" + key + ".json";
+        url = "https://interactive.guim.co.uk/docsdata/" + key + ".json";
+        //url = "http://interactive.guim.co.uk/docsdata-test/" + key + ".json";
     
     d3.json(url, (err, json) => {
         
@@ -35,8 +36,8 @@ export function init(el, context, config, mediator) {
         // furniture
         var header = meta.splice(0, 1)[0],
             headerNav = meta.filter(m => ("cha org tec").indexOf(m.id)>-1);
-        el.querySelector(".js-headline").textContent = header.title;
-        el.querySelector(".js-standfirst").textContent = header.description;
+        //el.querySelector(".js-headline").textContent = header.title;
+        //el.querySelector(".js-standfirst").textContent = header.description;
         loadNavigation(headerNav); 
         
         // sections
@@ -66,7 +67,7 @@ export function init(el, context, config, mediator) {
     
     modeEl.addEventListener("click", () => {
         bodyCl.toggle("o-3_4");
-        modeEl.textContent = bodyCl.contains("o-3_4") ? "Exit Theatre Mode?":"Switch to Theatre Mode";
+        modeEl.textContent = bodyCl.contains("o-3_4") ? "Back at home?":"In the cinema?";
     });
 
 
@@ -74,7 +75,7 @@ export function init(el, context, config, mediator) {
     var g = guardian.config.page,
         gHeadline = g.headline,
         gUrl = g.shortUrl,
-        tPic = "waiting for pic"; // TODO: add tPic  
+        tPic = " pic.twitter.com/BGdydyLPRa"; 
     var shareFn = share(g.headline, gUrl+" "+tPic, '#Interactive');
     [].slice.apply(el.querySelectorAll('.btn-share')).forEach(shareEl => {
         var network = shareEl.getAttribute('data-network');

@@ -1,5 +1,5 @@
 import Hammer from '../lib/hammer.min';
-import {isMobile} from '../lib/utils';
+import {isMobile, isApp} from '../lib/utils';
 import {addItemSelected} from '../controller/sectionItemSelected';
 import svgs from '../../assets/svg.json!json';
 
@@ -18,9 +18,15 @@ export default function(el, dataList, mt) {
     .style("left", d => d.left)
     .style("width", d => d.size + "px")
     .style("height", d => d.size + "px")
-    .on("touchstart", (d) => el.select("#"+d.id).classed("a-item", true))
-    .on("touchend", (d) => el.select("#"+d.id).classed("a-item", false))
     .on("click", d => {if (isMobile()) return; addItemSelected(el, d);})
+    .on("touchstart", (d) => {
+        if(isApp()){window.GuardianJSInterface.registerRelatedCardsTouch(true);}
+        el.select("#"+d.id).classed("a-item", true);
+    })
+    .on("touchend", (d) => { 
+        el.select("#"+d.id).classed("a-item", false);
+        if(isApp()){window.GuardianJSInterface.registerRelatedCardsTouch(false);}
+    })
     .each(d => {if (!isMobile()) return; addHammerEvents(el, d);});
     
     icons
