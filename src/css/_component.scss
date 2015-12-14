@@ -60,9 +60,11 @@ svg {
 
 .btn-nav {
     color: white;
-    @include fs-textSans(4);
     cursor: pointer; 
-}
+    @include fs-textSans(4);
+    @include mq(mobileLandscape) {
+    font-size: 16px;
+}}
 
 .btn-close {
     cursor: pointer;

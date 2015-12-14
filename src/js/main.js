@@ -8,8 +8,6 @@ import {loadNavigation, addNavigationOnScroll} from './controller/navigation';
 import {initSection, loadSection} from './controller/section';
 import initSectionItemSelected from './controller/sectionItemSelected';
 
-var shareFn = share('Interactive title', 'http://gu.com/p/URL', '#Interactive');
-
 export function init(el, context, config, mediator) {
     iframeMessenger.enableAutoResize(); 
     testMobile();
@@ -46,7 +44,12 @@ export function init(el, context, config, mediator) {
             id2title = {};
         meta.forEach(m => id2title[m.id] = m);
         initSection(id2title, size);
-        secs.forEach(s => loadSection(el, getDataById(data, s), s, config.assetPath));
+        secs.forEach(s => { 
+            // NOTE: hotfix due to last day
+            var dataSec = getDataById(data, s);
+            if (s === "org") { dataSec = dataSec.concat(getDataById(data, "oth")); }
+            loadSection(el, dataSec, s, config.assetPath);
+        });
         initSectionItemSelected(data, size, config.assetPath);
         
         // navigation and related new links    
@@ -63,11 +66,16 @@ export function init(el, context, config, mediator) {
     
     modeEl.addEventListener("click", () => {
         bodyCl.toggle("o-3_4");
-        modeEl.textContent = bodyCl.contains("o-3_4") ? "At home?":"In the theatre?";
+        modeEl.textContent = bodyCl.contains("o-3_4") ? "Exit Theatre Mode?":"Switch to Theatre Mode";
     });
 
 
     // share buttons
+    var g = guardian.config.page,
+        gHeadline = g.headline,
+        gUrl = g.shortUrl,
+        tPic = "waiting for pic"; // TODO: add tPic  
+    var shareFn = share(g.headline, gUrl+" "+tPic, '#Interactive');
     [].slice.apply(el.querySelectorAll('.btn-share')).forEach(shareEl => {
         var network = shareEl.getAttribute('data-network');
         shareEl.addEventListener('click',() => shareFn(network));

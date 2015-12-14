@@ -5,7 +5,7 @@ $radius-ring: 620px;
 
 /* Header styles */
 // override the guardian's styles
-ul { marign-left: 0; }
+ul { margin-left: 0; }
 .l-header {
     display: none;
 }
@@ -62,7 +62,9 @@ ul { marign-left: 0; }
         display: inline-block;
         margin-right: 16px;
         &:last-child { margin-right: 0; }
-    }
+        @include mq(mobileLandscape) {
+        margin-right: 36px;
+    }}
     svg, span {
         display: inline-block;
         vertical-align: middle;
@@ -94,18 +96,25 @@ section {
     position: relative;
     width: 100%;
     max-width: 600px;
+    height: 400px;
     margin: 0 auto;
-}
+    @include mq(mobileLandscape) { 
+    height: 600px;
+}}
 .l-item {
     width: $radius-mid;
     height: $radius-mid;
     cursor: pointer;
 }
-.l-ring {
+.l-ring,
+.l-rels-ring {
     width: 100%;
     height: 100%;
     border-radius: $radius-mid/2;
     box-shadow: 0 0 0 2px black, 0 0 0 4px white, 0 0 0 6px black, 0 0 0 7px rgba(255,255,255,0.5);
+}
+.l-rels-ring {
+    margin-top: -71px; 
 }
 
 /* Modal */
@@ -118,6 +127,7 @@ section {
     height: 100%;
     overflow-y: scroll; 
     z-index: 1041;      // ads and breaking news are 1040
+    transition: opacity 0.5s ease-in;
 }
 .l-selected {
     color: white;
@@ -150,15 +160,12 @@ section {
 }
 
 .l-rels {
-    margin-top: 36px;
-    padding-top: 12px;
     ul { margin-left: 0; }
     li { 
-        list-style: none;
-        min-height: 80px;
-        cursor: pointer;
-}
-}
+    list-style: none;
+    min-height: 80px;
+    cursor: pointer;
+}}
 .l-rels-img {
     float: left;
     width: 64px;

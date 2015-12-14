@@ -31,7 +31,6 @@ export function loadSection(el, data, sec, assetPath) {
     secEl.querySelector(".js-type").textContent = metaData[sec].type;
     secEl.querySelector(".js-title").textContent = metaData[sec].title;
     secEl.querySelector(".js-detail").textContent = metaData[sec].description;
-    secEl.querySelector(".js-list").style.height = (sizeWindow.width>480 ? 600:400) + "px";
 
     // remap items in section data
     var p = getLayout(),

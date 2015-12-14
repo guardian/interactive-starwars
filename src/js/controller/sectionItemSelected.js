@@ -10,7 +10,7 @@ const bg ={
 };
 
 var htmlEl, mainEl, transitEl,
-    modalEl_qs, modalEl_d3, listEls, picEl, 
+    modalEl_qs, modalEl_d3, contentEl, listEls, picEl, 
     data;
 
 export default function(d, size, assetPath) {
@@ -50,7 +50,7 @@ export function addItemSelected(sectionEl, d) {
     // 2. lock scroll event in main page
     // 3. remove transition effects
     window.setTimeout(() => {
-        addItemBio(d);                              // 1
+        addItemProfile(d);                              // 1
         htmlEl.style.overflowY = "hidden";          // 2 and fix IE scrollbar issue
         mainEl.classList.remove("a-hyperspace");    // 3
         transitEl.classList.remove("a-transit");
@@ -62,7 +62,6 @@ export function addItemSelected(sectionEl, d) {
             window.GuardianJSInterface.registerRelatedCardsTouch(true); 
             //console.log("touch on");
         }
-        modalEl_qs.scrollTop = 0;
     }, 600);
     
     // close:
@@ -81,10 +80,10 @@ export function addItemSelected(sectionEl, d) {
     });
 }
 
-function addItemBio(d) {
+function addItemProfile(d) {
     modalEl_qs.scrollTop = 0;
 
-    // add item bio
+    // add item profile
     picEl.src = "";
     modalEl_d3.classed("d-n", false)
     .style("background-image", "radial-gradient("+bg[d.side][0]+","+bg[d.side][1]+")");
@@ -120,8 +119,15 @@ function addItemBio(d) {
     //picEl.onerror = () => { el.classList.add("d-n");};
     
     var rect = modalEl_qs.querySelector(".js-rels").getBoundingClientRect(); 
-    modalEl_qs.querySelector(".l-selected").style.height = rect.bottom + "px";
+    contentEl = modalEl_qs.querySelector(".l-selected");
+    contentEl.style.height = rect.bottom + "px";
     //console.log("height:", rect.bottom);
+}
+
+function addItemProfileWithTransition(d) {
+    contentEl.classList.add("a-fade-effect");
+        window.setTimeout(() => addItemProfile(d), 500);
+        window.setTimeout(() => contentEl.classList.remove("a-fade-effect", false), 1500);      
 }
 
 function getItemRelatedList(names, relas) {
@@ -129,6 +135,8 @@ function getItemRelatedList(names, relas) {
         relaList = (relas.split(",")).map(r => r.trim());
     
     return names==="" ? undefined:nameList.map((name, i) => {
+        // NOTE: upper/lower case!?
+        //console.log(name, obj);
         var obj = data.filter(d => d.name === name)[0];
         obj.relation = relaList[i]? relaList[i]:"";
         return obj;
@@ -141,14 +149,14 @@ function addItemRelatedList(el, dataRel) {
     .data(dataRel).enter()
     .append("li")
     .attr("id", d => "rel-"+d.id)
-    //.on("touchstart", d => addItemBio(d))
-    .on("click", d => {if (isMobile()) return; addItemBio(d);})
+    //.on("touchstart", d => addItemProfile(d))
+    .on("click", d => {if (isMobile()) return; addItemProfileWithTransition(d);})
     .each(d => {if (!isMobile()) return; addHammerEvents(d);});
     
     relEls
     .append("div")
     .attr("class", "l-rels-img")
-    .html(d => {var str = svgs[d.id]; return str? svgs[d.id]:"<svg></svg>";});
+    .html(d => {var str = svgs[d.id]; return str? svgs[d.id]+'<div class="l-rels-ring a-ring"></div>':"<svg></svg>";});
     
     relEls
     .append("div")
@@ -158,10 +166,9 @@ function addItemRelatedList(el, dataRel) {
     );
 }
 
-function addHammerEvents(d) {
-    
+function addHammerEvents(d) {    
     var mc = Hammer(modalEl_qs.querySelector("#rel-"+d.id));
     mc.on("tap", e => {
-        addItemBio(d);
+        addItemProfileWithTransition(d);
     });
 }
