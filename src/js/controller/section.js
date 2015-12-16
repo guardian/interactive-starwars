@@ -1,5 +1,6 @@
 import secHTML from '../view/section.html!text';
-import {getLayout} from '../lib/utils';
+import {getLayout, getWindowSize} from '../lib/utils';
+import {throttle} from '../lib/underscore.lite';
 import addSectionList from '../controller/sectionList';
 
 const maxItems = 21;
@@ -12,12 +13,32 @@ var metaData,
     maxRadius, difRadius,
     sizeWindow;
 
+var isSmall;
+function getCircleSize() {
+    var isSmallStill;
+    if (getWindowSize().width < 480) { isSmallStill = true; }
+    else { isSmallStill = false; }
+    
+    if (isSmall === isSmallStill) return; 
+    isSmall = isSmallStill;
+    //console.log(isSmall);    
+    
+    return {
+        maxR: isSmall? 72:100,
+        difR: isSmall? 12:20
+    };
+}
+
 export function initSection(meta, size) {
-    maxRadius = size.width<480 ? 72:100;
-    difRadius = size.width<480 ? 12:20;
+    var cs = getCircleSize();
+    maxRadius = cs.maxR;
+    difRadius = cs.difR;
     sizeWindow = size;
 
     metaData = meta;    
+}
+export function postSection() {
+    window.addEventListener('resize', throttle(getCircleSize, 1000));
 }
 
 export function loadSection(el, data, sec, assetPath) {
@@ -49,8 +70,6 @@ export function loadSection(el, data, sec, assetPath) {
         d.top  = "calc(" + p[i].y + "% - " + d.size/2 + "px)";
         d.left = "calc(" + p[i].x + "% - " + d.size/2 + "px)";
         d.imgsrc = (!d.img) ? "":assetPath + "/assets/imgs/jpegs/" + d.id + ".jpg";         
-
-        //d.image = "url('" + assetPath + "/assets/imgs/jpegs/" + d.id + ".jpeg')";         
         return d;
     });
 
